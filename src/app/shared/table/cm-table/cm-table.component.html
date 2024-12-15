@@ -1,0 +1,74 @@
+<div class="w-full overflow-hidden rounded-lg shadow-xs mt-2 mb-5">
+  <div class="w-full overflow-x-auto">
+    <table class="w-full text-sm text-left text-gray-500 dark:text-gray-400">
+      <thead class="w-full whitespace-no-wrap">
+        <tr class="text-xs font-semibold tracking-wide text-left text-gray-500  border-b dark:border-gray-700 bg-gray-50 dark:text-gray-400 dark:bg-gray-800">
+          <ng-container *ngFor="let column of tableObject.columns" >
+              <th *ngIf="column.isDisplayOnGrid &&  column.type != 'gridcheckbox'" class="px-4 py-3" >
+                <ng-container *ngIf="tableObject.gridConfig.isShowSorting == true">
+                  <span *ngIf="column.isSorting" [attr.columnName]="column.name" [attr.sortType]="column.type" (click)="sortData($event)">{{column.displayName}}</span>       
+                  <span *ngIf="column.isSorting && colmnName == column.name"  [attr.class]="this.sortObj.orderBy === -1? 'arrow-up': 'arrow-down'" [attr.columnName]="column.name" [attr.sortType]="column.type" (click)="sortData($event)"></span>
+                  <span *ngIf="!column.isSorting">{{column.displayName}}</span>
+                </ng-container>
+                <ng-container *ngIf="tableObject.gridConfig.isShowSorting == false">
+                  <span>{{column.displayName}}</span>
+                </ng-container>
+              </th>
+              <th *ngIf="column.isDisplayOnGrid && column.type == 'gridcheckbox'" class="px-4 py-3"> <ng-container><input type="checkbox" [checked]="isAllCheckBoxChecked()" (change)="checkAllCheckBox($event)"/></ng-container> </th>
+          </ng-container>
+        </tr>
+        <tr  *ngIf="tableObject.gridConfig.isShowFilter" >
+          <ng-container *ngFor="let column of tableObject.columns">
+              <th *ngIf="column.isDisplayOnGrid" >
+                <ng-container *ngIf="column.filter.isFiltering">
+                  <ng-container *ngIf="column.filter.filterInputType=='input'">
+                    <input (input)="filterData($event)" [attr.columnName]="column.name" class="form-control" style="width: auto;" /> 
+                  </ng-container>
+                  <ng-container *ngIf="column.filter.filterInputType=='date' && column.filter.filterType=='daterange'"> 
+                    From: <input  type="date" [attr.columnName]="column.filter.filterFrom" (input)="filterData($event)" class="form-control" style="width: auto;" />
+                    To: <input  type="date"  [attr.columnName]="column.filter.filterTo" (input)="filterData($event)" class="form-control" style="width: auto;" />
+                  </ng-container>
+                </ng-container>             
+             </th>
+          </ng-container>
+        </tr>
+      </thead>
+      <tbody class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
+        <tr *ngFor="let row of  tableObject.rows;" class="text-gray-700 dark:text-gray-400">
+          <ng-container *ngFor="let column of tableObject.columns"> 
+            <td *ngIf="column.isDisplayOnGrid && column.type != 'gridcheckbox'" class="px-4 py-3 text-sm">
+              <div *ngIf="column.html">
+                 <ng-container [ngTemplateOutlet]="template[column.htmlName]"  [ngTemplateOutletContext]="{data: row}"></ng-container>
+              </div>
+              <div *ngIf="!column.html"  [innerHtml]="row[column.name]" ></div>  
+            </td>
+            <td *ngIf="column.isDisplayOnGrid && column.type == 'gridcheckbox'" class="px-4 py-3 text-sm">     
+              <ng-container><input type="checkbox" value={{row.id}} [(ngModel)]="row[column.name]" /></ng-container> 
+            </td>
+          </ng-container>        
+        </tr>
+        <tr *ngIf="tableObject.rows.length === 0" class="text-gray-700 dark:text-gray-400">
+          <td style="width: auto;border: none !important;">
+            <p style="margin-top: 1rem; margin-bottom: 1rem;"><span>No Records Found</span></p>
+          </td>
+        </tr>
+        <tr *ngIf="isShowInsertion=='Y'" class="text-gray-700 dark:text-gray-400">             
+          <ng-container *ngFor="let column of tableObject.columns; let i = index">
+              <td>
+                  <ng-container *ngIf="column.insertDetails.isDisplayOnGrid && (column.insertDetails.name.toLowerCase() != 'action' && column.insertDetails.name.toLowerCase() != 'action(s)')">
+                    <input  class="form-control" style="width: auto;"  [(ngModel)]="column.insertDetails.value"  name="column.insertDetails.name"  required /> 
+                    <small class="text-danger" *ngIf="isShowError" >*</small> 
+                  </ng-container>
+                  <ng-container *ngIf="(column.insertDetails.name.toLowerCase() == 'action' || column.insertDetails.name.toLowerCase() == 'action(s)')">
+                    <a title="Add" class="actionIcon"  (click)="addClick()">
+                      <img />
+                    </a>
+                  </ng-container>                
+             </td>
+          </ng-container>         
+        </tr>
+      </tbody>
+    </table>
+  </div>
+</div>
+<cm-table-pagination  [tableObject] ="this.tableObject" (pageChange)="pChange($event)" (pageSizeChange)="pageSizeChange($event)"></cm-table-pagination>

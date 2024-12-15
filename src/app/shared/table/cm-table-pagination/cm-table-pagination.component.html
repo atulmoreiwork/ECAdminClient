@@ -1,0 +1,33 @@
+<div class="flex flex-wrap items-center justify-between max-w-screen-xl mx-auto">
+  <div class="left">
+
+  </div>
+  <div class="right flex items-center md:order-2">
+    <div class="pageSize mr-2">
+      <!-- <span class="Pagingname mr-2">Page Size</span> -->
+      <select (change)="pgSizeChange($event)" class="relative inline-flex items-center rounded-lg border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20">
+        <option *ngFor="let size of pageSizeList">
+          {{ size }}
+        </option>
+      </select>
+    </div>
+    <nav aria-label="isolate inline-flex -space-x-px rounded-md shadow-sm">
+      <ul class="inline-flex -space-x-px">
+        <li  [class.disabled] = "tableObject.pageNumber ==1">
+          <a (click)="paging(1)" href="javascript:void(0)" tabindex="-1" class="relative inline-flex items-center rounded-l-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20">First</a>
+        </li>
+        <li *ngFor="let p of tableObject.paging">
+          <a (click)="paging(p)" href="javascript:void(0)" [class.aspNetDisabled]="p== tableObject.pageNumber" class="relative inline-flex items-center border border-gray-300 bg-white px-4 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20 aspNetDisabled">{{p}}</a>
+        </li>
+        <li [class.disabled] = "tableObject.totalPages == tableObject.pageNumber">
+          <a (click)="paging(tableObject.totalPages)" href="javascript:void(0)" tabindex="-1" class="relative inline-flex items-center rounded-r-md border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20">Last</a>
+        </li>
+      </ul>
+    </nav>
+    <select  class="ml-2 relative inline-flex items-center rounded-lg border border-gray-300 bg-white px-2 py-2 text-sm font-medium text-gray-500 hover:bg-gray-50 focus:z-20" [(ngModel)]="tableObject.pageNumber" (change)="onChange($event)">
+      <option [value]="item.key"  *ngFor="let item of tableObject.pageAccessList" >
+          {{ item.value }}
+      </option>
+    </select>
+  </div>
+</div>
