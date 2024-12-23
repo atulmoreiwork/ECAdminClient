@@ -1,70 +1,61 @@
-<main id="content"  class="flex-1 pb-12 space-y-6 overflow-y-auto bg-gray-100 lg:h-screen md:space-y-8 transition-all duration-300">
-   <header 
-    [ngClass]="{'pl-[17rem]': isSubmenuOpen, 'pl-[6rem]': !isSubmenuOpen}" 
-    class="flex items-center justify-between h-20 px-6 bg-white border-b transition-all duration-300">
-    <div class="relative flex items-start">
-      <button (click)="toggleSubmenu()">
-        <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
-          <path d="M4 6H20M4 12H20M4 18H20" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/>
-        </svg>
-      </button>
-    </div>
+<main id="content" class="flex bg-gray-100 lg:h-screen transition-all duration-300">
+  <!-- Sidebar Section -->
+  <aside
+    [ngClass]="{'w-[15rem]': isSubmenuOpen, 'w-[4.5rem]': !isSubmenuOpen}"
+    class="flex flex-col bg-white border-r transition-all duration-300">
+    <app-sidebar [isSubmenuOpen]="isSubmenuOpen"></app-sidebar>
+  </aside>
 
-    <div class="flex items-center">
-      <!-- Add other header elements here -->
-      <div class="relative hidden">
-        <button class="transition-colors duration-300 rounded-lg sm:px-4 sm:py-2 focus:outline-none hover:bg-gray-100">
-          <span class="sr-only">User Menu</span>
-          <div class="flex items-center md:-mx-2">
-            <div class="hidden md:mx-2 md:flex md:flex-col md:items-end md:leading-tight">
-              <span class="font-semibold text-sm text-gray-800">Dhaiflaah</span>
-              <span class="text-sm text-gray-600">Lecturer</span>
-            </div>
-            <img class="flex-shrink-0 w-10 h-10 overflow-hidden bg-gray-100 rounded-full md:mx-2"
-              src="https://randomuser.me/api/portraits/men/68.jpg" alt="user profile photo">
-          </div>
+  <!-- Main Content Section -->
+  <div class="flex-1 flex flex-col">
+    <!-- Header Section -->
+    <header      
+      class="pl-[2rem] flex items-center justify-between h-20 px-6 bg-white border-b transition-all duration-300">
+      <div class="flex items-center">
+        <!-- Sidebar Toggle Button -->
+        <button (click)="toggleSubmenu()">
+          <svg width="30px" height="30px" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg">
+            <path d="M4 6H20M4 12H20M4 18H20" stroke="#000000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" />
+          </svg>
         </button>
-        <div class="absolute right-0 z-50 w-56 p-2 bg-white border rounded-lg top-16 lg:top-20" style="display: none;">
-          <div
-            class="px-4 py-2 text-gray-800 transition-colors duration-300 rounded-lg cursor-pointer hover:bg-gray-100">
-            Profile</div>
-          <div
-            class="px-4 py-2 text-gray-800 transition-colors duration-300 rounded-lg cursor-pointer hover:bg-gray-100">
-            Messages</div>
-          <div
-            class="px-4 py-2 text-gray-800 transition-colors duration-300 rounded-lg cursor-pointer hover:bg-gray-100">
-            To-Do's</div>
-        </div>
       </div>
-      <div class="fixed inset-0 z-30" style="display: none;"></div>
-      <button
-        class="relative hidden p-2 mx-3 text-gray-400 transition-colors duration-300 rounded-full hover:bg-gray-100 hover:text-gray-600 focus:bg-gray-100">
-        <span class="sr-only">Notifications</span>
-        <span class="absolute top-0 right-0 w-2 h-2 mt-1 mr-2 bg-blue-700 rounded-full"></span>
-        <span class="absolute top-0 right-0 w-2 h-2 mt-1 mr-2 bg-blue-700 rounded-full animate-ping"></span>
-        <svg aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M15 17h5l-1.405-1.405A2.032 2.032 0 0118 14.158V11a6.002 6.002 0 00-4-5.659V5a2 2 0 10-4 0v.341C7.67 6.165 6 8.388 6 11v3.159c0 .538-.214 1.055-.595 1.436L4 17h5m6 0v1a3 3 0 11-6 0v-1m6 0H9">
-          </path>
-        </svg>
-      </button>
-      <button (click)="logout()"
-        class="p-2 text-gray-400 transition-colors duration-300 rounded-full focus:outline-none hover:bg-gray-100 hover:text-gray-600 focus:bg-gray-100"><span
-          class="sr-only" >Log out</span>
-        <svg aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2"
-            d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1"></path>
-        </svg>
-      </button>  
-    </div>
-  </header>
-  <section [ngClass]="{'pl-[17rem]': isSubmenuOpen, 'pl-[6rem]': !isSubmenuOpen}"
-    class="flex flex-col w-full px-6 transition-all duration-300">
-    <router-outlet></router-outlet>
-  </section>
-  <section 
-  [ngClass]="{'w-[15rem]': isSubmenuOpen, 'w-[4.5rem]': !isSubmenuOpen}" 
-  class="flex flex-col transition-all duration-300">
-  <app-sidebar [isSubmenuOpen]="isSubmenuOpen"></app-sidebar>
-</section>
+      <div class="flex items-center">
+        <!-- User Menu -->
+        <div class="relative hidden">
+          <button class="transition-colors duration-300 rounded-lg sm:px-4 sm:py-2 focus:outline-none hover:bg-gray-100">
+            <div class="flex items-center">
+              <div class="hidden md:flex md:flex-col md:items-end md:leading-tight">
+                <span class="font-semibold text-sm text-gray-800">Dhaiflaah</span>
+                <span class="text-sm text-gray-600">Lecturer</span>
+              </div>
+              <img
+                class="w-10 h-10 bg-gray-100 rounded-full"
+                src="https://randomuser.me/api/portraits/men/68.jpg"
+                alt="User profile photo">
+            </div>
+          </button>
+        </div>
+        <!-- Logout Button -->
+        <button
+          (click)="logout()"
+          class="p-2 text-gray-400 transition-colors duration-300 rounded-full focus:outline-none hover:bg-gray-100 hover:text-gray-600 focus:bg-gray-100">
+          <span class="sr-only">Log out</span>
+          <svg aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="w-6 h-6">
+            <path
+              stroke-linecap="round"
+              stroke-linejoin="round"
+              stroke-width="2"
+              d="M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1" />
+          </svg>
+        </button>
+      </div>
+    </header>
+
+    <!-- Content Section -->
+    <section
+      class="pl-[2rem]  flex-1 px-6 py-4 transition-all duration-300">
+      <router-outlet></router-outlet>
+    </section>
+  </div>
 </main>
+

@@ -4,7 +4,7 @@ export interface ICategory
     categoryName: string;
     urlSlug:string;
     description: string;
-    parentCategoryId: string;    
+    parentCategoryId: number;    
     status:string;
     row: string;
     totalRowCount: string;
@@ -16,3 +16,4 @@ export interface IParentCategory
     categoryId: number;
     categoryName: string;
 }
+

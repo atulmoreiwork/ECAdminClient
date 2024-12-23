@@ -1,17 +1,66 @@
-<div class="box bg-gray-100   content-center justify-items-cente h-[60vh] md:h-[50vh] lg:h-screen">
-    <form>
-        <div class="max-w-[500px] mx-auto">
-          <div class="mb-2">
-            <label for="username" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">UserName</label> 
-            <input type="text" placeholder="Login Id" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" />
+<header aria-label="Page Header">
+  <div class="mt-2 mb-2 sm:flex sm:items-center sm:justify-between">
+    <div class="text-center sm:text-left">
+      <h1 class="text-2xl font-bold text-gray-900 sm:text-3xl">
+        Add / Edit Category
+      </h1>      
+    </div>  
+  </div>
+  </header>
+  <section class="w-full  bg-white rounded-lg shadow dark:border">
+    <div class="w-full whitespace-no-wrap">
+      <div class=" text-xs font-bold tracking-wide px-4 py-3 text-left text-black-500  border-b dark:border-gray-700 bg-gray-50 dark:text-black-400 dark:bg-gray-800">
+        <label> Please enter details </label>
+      </div>
+      <div class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800 w-1/2">
+        <form [formGroup]="AddNewCategoryForm" (ngSubmit)="submitForm()" class="p-4" *ngIf="AddNewCategoryForm">
+          <div class="mb-6">
+            <label for="categoryName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Category Name</label>
+            <input type="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500 dark:shadow-sm-light" formControlName="categoryName"  name="categoryName" 
+            [ngClass]="{ 'is-invalid': submitted && f['categoryName'].errors }" />     
+            <div *ngIf="submitted && f['categoryName'].errors" class="text-red-500">
+              <div *ngIf="f['categoryName'].errors['required']" >Please enter category name</div>                              
+            </div> 
           </div>
-          <div class="mb-2">
-            <label for="password" class="mb-2 block text-sm font-medium text-gray-900 dark:text-white">Password</label> 
-            <input type="password" placeholder="Password" class="bg-white border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"/>
+          <div class="mb-6">
+            <label for="description" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Description</label>
+            <input type="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500 dark:shadow-sm-light" formControlName="description"
+            name="description" [ngClass]="{ 'is-invalid': submitted && f['description'].errors }" />     
+            <div *ngIf="submitted && f['description'].errors" class="text-red-500">
+              <div *ngIf="f['description'].errors['required']" >Please enter description</div>                              
+            </div>    
           </div>
-          <div>
-            <button id="btnLogin"  class="text-gray-900 bg-white border border-gray-300 focus:outline-none hover:bg-gray-100 cursor-pointer">Login</button>
+          <!-- <div class="mb-6">
+            <label for="parentCategoryName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Parent Category</label>
+            <select formControlName="parentCategoryId" [(ngModel)]="parentCategoryId" 
+            (change)="changeCategoryDropDown($event)" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500">
+                <option value="">Select</option>
+                <option [value]="item.categoryId"  *ngFor="let item of parentCategoryDropDownList"> {{item.categoryName}}</option>
+             </select> 
+          </div> -->
+          <div class="mb-6">
+            <label for="status" class="block mb-2 text-sm font-medium text-gray-700">Status</label>
+            <select
+              id="status"
+              formControlName="status"
+              class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500">
+              <option value="">Select Status</option>
+              <option value="active">Active</option>
+              <option value="inactive">Inactive</option>
+            </select>
+            <div *ngIf="submitted && AddNewCategoryForm.get('status')?.invalid" class="mt-1 text-red-500">
+              Status is required.
+            </div>
           </div>
-        </div>        
-      </form>
-</div>
+          <button type="submit" class="text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800">Submit</button>
+          <button type="button" class="text-white bg-purple-700 hover:bg-purple-800 focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-purple-600 dark:hover:bg-purple-700 dark:focus:ring-purple-800 ml-2" (click)="cancel()">Cancel</button>
+        </form>
+        <div class="valid-feedback text-green-700 mt-5" *ngIf="submitted && !addCategoryError" >
+          {{ errorMessage }}
+        </div>
+        <div class="valid-feedback text-green-700 mt-5" *ngIf="submitted && !addCategoryError" >
+          {{ successMessage }}
+        </div>
+      </div>
+    </div> 
+  </section>

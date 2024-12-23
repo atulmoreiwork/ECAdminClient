@@ -33,7 +33,7 @@ export class CategoryService {
       return of(this.initializedClient());
     } else {
       return this.http
-        .get<ICategory>(apiUrl + '/Category/GetCategoryById?ClientId=' + id, {
+        .get<ICategory>(apiUrl + '/Category/GetCategoryById?CategoryId=' + id, {
           headers: this.headers,
         })
         .pipe(
@@ -54,7 +54,7 @@ export class CategoryService {
       categoryName: '',
       urlSlug:'',
       description: '',
-      parentCategoryId: '',
+      parentCategoryId: 0,
       status:'',
       row: '',
       totalRowCount:'',
