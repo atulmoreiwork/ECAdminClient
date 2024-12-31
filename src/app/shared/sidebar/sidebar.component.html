@@ -1,22 +1,22 @@
 <aside
   [ngClass]="{'w-[15rem]': isSubmenuOpen, 'w-20': !isSubmenuOpen}"
   class="fixed inset-y-0 left-0 z-30 sm:flex sm:flex-col min-h-screen space-y-6 overflow-y-auto text-gray-100 transition-all duration-300 transform bg-gray-800">
- <a href="#" class="flex justify-start px-4 py-4 w-full lg:h-20 font-bold text-white bg-purple-700 hover:bg-purple-600">
+ <a href="#" class="flex justify-start px-4 py-4 w-full lg:h-20 font-bold text-white bg-ec_themecolor_primary hover:bg-ec_themecolor_secondary">
     <svg fill="none" viewBox="0 0 64 64" class="w-12 h-12">
       <title>Company logo</title>
       <path d="M32 14.2c-8 0-12.9 4-14.9 11.9 3-4 6.4-5.6 10.4-4.5 2.3.6 4 2.3 5.7 4 2.9 3 6.3 6.4 13.7 6.4 7.9 0 12.9-4 14.8-11.9-3 4-6.4 5.5-10.3 4.4-2.3-.5-4-2.2-5.7-4-3-3-6.3-6.3-13.7-6.3zM17.1 32C9.2 32 4.2 36 2.3 43.9c3-4 6.4-5.5 10.3-4.4 2.3.5 4 2.2 5.7 4 3 3 6.3 6.3 13.7 6.3 8 0 12.9-4 14.9-11.9-3 4-6.4 5.6-10.4 4.5-2.3-.6-4-2.3-5.7-4-2.9-3-6.3-6.4-13.7-6.4z" fill="#fff"/>
     </svg>
   </a>
-  <div class="flex-grow flex flex-col justify-between text-gray-500 bg-gray-800">
+  <div class="flex-grow flex flex-col justify-between">
     <nav class="flex flex-col mx-4 my-1 space-y-4">
       <!-- Dashboard Navigation -->
-      <a  [routerLink]="'dashboard'" routerLinkActive="bg-white text-purple-600" class="inline-flex items-center justify-center px-3 py-3   rounded-lg">        
+      <a  [routerLink]="'dashboard'" routerLinkActive=" bg-white text-ec_themecolor_secondary" class="inline-flex items-center justify-center px-3 py-3  rounded-lg">        
         <svg aria-hidden="true" fill="none" viewBox="0 0 24 24"  class="h-6 w-6" 
-        [class.stroke-purple-700]="router.isActive('dashboard', true)"
-        [class.stroke-gray-500]="!router.isActive('dashboard', true)">
+        [class.stroke-ec_stroke_purple]="router.isActive('dashboard', true)"
+        [class.stroke-ec_stroke_gray]="!router.isActive('dashboard', true)">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" />
         </svg>
-        <span *ngIf="isSubmenuOpen" class="mx-4 font-medium" [class.text-purple-700]="router.isActive('dashboard', true)"
+        <span *ngIf="isSubmenuOpen" class="mx-4 font-medium" [class.text-ec_themecolor_primary]="router.isActive('dashboard', true)"
         [class.text-white]="!router.isActive('dashboard', true)">Dashboard</span>
       </a>
     
@@ -24,21 +24,20 @@
       <ng-container *ngFor="let item of menulist">
         <a
           [routerLink]="item.pageURL"
-          routerLinkActive="bg-white text-purple-600"
+          routerLinkActive="bg-white text-ec_themecolor_secondary"
           class="inline-flex items-center justify-center px-3 py-3 rounded-lg">
           <svg  aria-hidden="true" fill="none" viewBox="0 0 24 24"  class="h-6 w-6" 
-            [class.stroke-blue-700]="router.isActive(item.pageURL, true)"
-            [class.stroke-gray-500]="!router.isActive(item.pageURL, true)">
+            [class.stroke-ec_stroke_purple]="router.isActive(item.pageURL, true)"
+            [class.stroke-ec_stroke_gray]="!router.isActive(item.pageURL, true)">
             <path
               d="M22 18.2222C22 18.6937 21.7893 19.1459 21.4142 19.4793C21.0391 19.8127 20.5304 20 20 20H4C3.46957 20 2.96086 19.8127 2.58579 19.4793C2.21071 19.1459 2 18.6937 2 18.2222V5.77778C2 5.30628 2.21071 4.8541 2.58579 4.5207C2.96086 4.1873 3.46957 4 4 4H9L11 6.66667H20C20.5304 6.66667 21.0391 6.85397 21.4142 7.18737C21.7893 7.52076 22 7.97295 22 8.44444V18.2222Z"
               fill="#969CBA" fill-opacity="0.2" stroke-width="2" stroke-linecap="round"
               stroke-linejoin="round" />
           </svg>
-          <span *ngIf="isSubmenuOpen" class="mx-4 font-medium " [class.text-purple-700]="router.isActive(item.pageURL, true)"
+          <span *ngIf="isSubmenuOpen" class="mx-4 font-medium " [class.text-ec_themecolor_primary]="router.isActive(item.pageURL, true)"
           [class.text-white]="!router.isActive(item.pageURL, true)">{{ item.name }}</span>
         </a>
       </ng-container>
-    </nav>
-    
+    </nav>    
   </div>
 </aside>

@@ -3,34 +3,27 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
 import { Observable, catchError, map, of } from 'rxjs';
-import { ICategory } from '../models/category.model';
 import { environment } from '../../environments/environment';
+import { IProduct } from '../models/product.model';
 
 const apiUrl = `${environment.apiUrl}`; 
 
 @Injectable({
   providedIn: 'root',
 })
-export class CategoryService {
+export class ProductService {
 
   headers = new HttpHeaders().set('Content-Type', 'application/json');
   constructor(private http: HttpClient, public router: Router) {
     console.log('HttpClient injected:', this.http);
   }
 
-  getCategories(): Observable<any> {
-    return this.http.get<any>(apiUrl + "/Category/GetCategories");
+  getAllProducts(data: any): Observable<any> {
+    return this.http.post<any>(apiUrl + "/Product/GetAllProducts", data, { headers: this.headers });
   }
 
-  getAllCategory(data: any): Observable<any> {
-    return this.http.post<any>(apiUrl + "/Category/GetAllCategories", data, { headers: this.headers });
-  }
-  getParentCategories(): Observable<any> {
-    return this.http.get<any>(apiUrl + "/Category/GetParentCategories", { headers: this.headers });
-  }
-
-  deleteCategoryById(params: any): Observable<any> {
-    return this.http.get<any>(apiUrl + "/Category/DeleteCategoryById", { headers: this.headers, params: params });
+  deleteProductById(params: any): Observable<any> {
+    return this.http.get<any>(apiUrl + "/Product/DeleteProductById", { headers: this.headers, params: params });
   }
 
   addUpdateCategory(data: any): Observable<any> {
@@ -38,12 +31,12 @@ export class CategoryService {
       headers: this.headers,
     });
   }
-  getCategory(id: number): Observable<ICategory> {
+  getProduct(id: number): Observable<IProduct> {
     if (id === 0) {
       return of(this.initializedClient());
     } else {
       return this.http
-        .get<ICategory>(apiUrl + '/Category/GetCategoryById?CategoryId=' + id, {
+        .get<IProduct>(apiUrl + '/Category/GetProductById?ProductId=' + id, {
           headers: this.headers,
         })
         .pipe(
@@ -58,13 +51,15 @@ export class CategoryService {
     }
   }
 
-  private initializedClient(): ICategory {
+  private initializedClient(): IProduct {
     return {
-      categoryId: 0,
-      categoryName: '',
+      productId: 0,
+      productName: '',
       urlSlug:'',
       description: '',
-      parentCategoryId: 0,
+      categoryId: 0,
+      price: '',
+      stockQuantity: '',
       status:'',
       row: '',
       totalRowCount:'',

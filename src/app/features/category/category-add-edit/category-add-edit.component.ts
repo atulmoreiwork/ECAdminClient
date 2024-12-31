@@ -30,7 +30,6 @@ export class CategoryAddEditComponent implements OnInit{
   ngOnInit(): void{
     this.acRoute.params.subscribe((e) => {
       this.id = +e['id'];
-
       this.categoryService.getCategory(this.id).subscribe((data) => {
         //console.log(data);
         if (data == undefined || data == null) {
@@ -51,7 +50,7 @@ export class CategoryAddEditComponent implements OnInit{
       categoryName:  [category.categoryName, [Validators.required]],
       description:  [category.description, [Validators.required]],
       //parentCategoryId: [category.parentCategoryId],
-      status: ['', Validators.required]
+      status: [category.status, Validators.required]
     });
     //this.getParentCategoryList();
   }

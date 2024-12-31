@@ -1,4 +1,4 @@
-import { NgModule } from '@angular/core';
+import { CUSTOM_ELEMENTS_SCHEMA, NgModule } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { AppComponent } from './app.component';
 import { BrowserModule } from '@angular/platform-browser';
@@ -7,8 +7,7 @@ import { CoreModule } from './core/core.module';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { MenuLayoutComponent } from './shared/menu-layout/menu-layout.component';
 import { HttpClientModule } from '@angular/common/http';
-
-
+import { QuillModule } from 'ngx-quill';
 
 @NgModule({
   declarations: [AppComponent],
@@ -16,11 +15,13 @@ import { HttpClientModule } from '@angular/common/http';
     CommonModule,
     BrowserModule,
     AppRoutingModule,
-    HttpClientModule,
     CoreModule,
     MenuLayoutComponent,
-    SidebarComponent,    
+    SidebarComponent,  
+    HttpClientModule,
+    QuillModule.forRoot()
   ],
+  schemas: [CUSTOM_ELEMENTS_SCHEMA],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

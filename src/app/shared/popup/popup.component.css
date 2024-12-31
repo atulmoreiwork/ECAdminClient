@@ -1,11 +1,44 @@
-.popup-show {
-    display: block;  
+.small {
+    @apply m-auto w-4/5 lg:w-[594px]
+}
+
+.large {
+    @apply m-auto py-2 w-4/5 lg:w-[1048px]
+}
+
+.full-width {
+    @apply w-full flex flex-col 
+}
+
+.tooltip:hover::before {
+    content: attr(data-tooltip);
+    display: block;
+    position: absolute;
+    top: 115%;
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: #333;
+    color: white;
+    border-radius: 3px;
+    min-width: 50px;
+    max-width: 100px;
+    padding: 5px 3px;
+    font-size: 12px;
+    text-align: center;
+    text-transform: capitalize;
+    z-index: 999;
+    opacity: 0.9;
+    pointer-events: none;
   }
   
-  .p-center {
-    left: 0px !important;
-    transition: 5s;
-    transform: rotate(360deg);
-    opacity: 1;
-    z-index: 900;
+  /* Arrow at the Top of Tooltip */
+  .tooltip:hover::after {
+    content: "";
+    position: absolute;
+    bottom: -15%;
+    left: 50%;
+    transform: translateX(-50%);
+    border-width: 5px;
+    border-style: solid;
+    border-color: transparent transparent #333 transparent;
   }

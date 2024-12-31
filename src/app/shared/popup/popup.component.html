@@ -1,21 +1,28 @@
- 
- <div class="modal box box-solid" [class.popup-show]="config.isShowPopup"  tabindex="-1" role="dialog" (ReturnMessage)="getReturnMessage($event)">
+<div class="modal fixed inset-0 z-40 w-screen h-screen" [class.popup-show]="config.isShowPopup"
+  (ReturnMessage)="getReturnMessage($event)">
+  <div class="modal-dialog flex absolute inset-0 w-screen h-screen z-50 overflow-x-hidden overflow-y-auto">
+    <div class="modal-content relative z-[45]" [ngClass]="{
+        small: config.popupFor == 'small',
+        large: config.popupFor == 'large',
+        'full-width': config.popupFor == 'fullWidth'
+      }">
+      <div class="modal-header relative z-10 h-[47px]">
+        <div class="flex items-center absolute top-1/2 -translate-y-[50%] right-5 z-10" *ngIf="config.isCrossIcon">
+          <button ID="btnClose" (click)="close()" class="tooltip btn-close inline-flex items-center"
+            data-tooltip="Close">
+            <span class="inline-flex justify-end w-[60px]">
 
-    <div class="modal-dialog modal-dialog-centered" role="document">
-      <div class="modal-content p-left professorLoginPanel popupsec"  [class.p-center]="config.isShowLeft">
-        <div class="studentEditClBtn">
-          <button ID="btnClose"  class="btn-close" (click)="close()">X</button>
+            </span>
+          </button>
         </div>
-        <div class="title_form" id="h3_Group"> {{config.header}}</div>
+        <h3 *ngIf="config.isShowHeaderText" class="text-xl text-white bg-ec_themecolor_primary truncate pr-12 pl-5 py-2.5"  title="{{ config.header }}">
+          {{ config.header }}
+        </h3>
+      </div>
+      <div class="modal-body bg-flp_background">
         <ng-content></ng-content>
-
-        <!--<div class="modal-body">    
-        </div>
-        <div class="modal-footer">
-          <button type="button" class="btn btn-primary m-2" (click)="save()">{{config.saveButtonName}}</button>
-          <button type="button" class="btn btn-secondary" (click)="close()" data-dismiss="modal">{{config.closeButtonName}}</button>
-        </div>-->
       </div>
     </div>
+  </div>
+  <div class="modal-overlay absolute inset-0 w-full h-screen z-40 bg-black/80" (click)="close()"></div>
 </div>
-<div *ngIf="config.isShowPopup" class="modalBackground" style="position: fixed; left: 0px; top: 0px; z-index: 999; width: 100%; height: 100%;"></div>

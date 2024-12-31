@@ -4,6 +4,8 @@ import { PopupComponent } from '../../../shared/popup/popup.component';
 import { FilterDetails, GridConfig, SortModel } from '../../../shared/table/table.model';
 import { CategoryService } from '../../../services/category.service';
 import { Router } from '@angular/router';
+import { PopUpConfig, PopUpConfigFactory } from '../../../shared/popup/popupconfig.model';
+import { ICategory } from '../../../models/category.model';
 
 @Component({
   selector: 'app-category-list',
@@ -16,6 +18,7 @@ export class CategoryListComponent implements OnInit{
   @ViewChild(CmTableComponent) child?: CmTableComponent;
   @ViewChild('popup') popup?: PopupComponent;
   gridConfig: GridConfig = new GridConfig();
+  category!:ICategory;
   constructor(private categoryService: CategoryService, private router: Router){
    this.tableObject.gridConfig = this.gridConfig;    
   }
@@ -83,7 +86,7 @@ export class CategoryListComponent implements OnInit{
       .subscribe({ next: (data: any) => {
           if(data.success == true)
           {
-            console.log("category Data: " + JSON.stringify(data));
+           // console.log("category Data: " + JSON.stringify(data));
            this.tableObject.totalItems = data.result.totalItems;
            this.tableObject.columns = data.result.columns;   
            this.tableObject.filter = data.result.filter;      
@@ -97,4 +100,29 @@ export class CategoryListComponent implements OnInit{
   }
 
   AddNewCategory(){ this.router.navigate(['categoryaddedit/0']); } 
+
+  popupConfig: PopUpConfig = PopUpConfigFactory.getPopUpConfig({
+    header: 'Delete User'
+  });
+
+  categoryDelete(obj: any) {
+    this.popupConfig.isShowPopup = true;
+    this.popupConfig.header = 'Confirm';
+    this.popupConfig.isShowHeaderText = true;
+    this.popupConfig.isConfirmBox = true;
+    this.popupConfig.popupFor = 'small';
+    this.popup?.open(this.popupConfig);
+    this.category = obj;
+  }
+  close($event: boolean) 
+  { 
+    this.popupConfig.isShowPopup = false;
+  }
+  getReturnMessage(message: any) {
+    debugger;
+    if(message == "delete"){
+      this.popupConfig.isShowPopup = false;
+      this.fillFilterObject();
+    }
+  }
 }
