@@ -99,7 +99,7 @@ export class CategoryListComponent implements OnInit{
       });
   }
 
-  AddNewCategory(){ this.router.navigate(['categoryaddedit/0']); } 
+  AddNewCategory(){ this.router.navigate(['category/categoryaddedit/0']); } 
 
   popupConfig: PopUpConfig = PopUpConfigFactory.getPopUpConfig({
     header: 'Delete User'

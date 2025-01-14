@@ -1,0 +1,165 @@
+    <header aria-label="Page Header">
+        <div class="mt-2 mb-2 sm:flex sm:items-center sm:justify-between">
+            <div class="text-center sm:text-left">
+                <h1 class="text-2xl font-bold text-gray-900 sm:text-3xl">
+                    Order Detail
+                </h1>
+            </div>
+        </div>
+    </header>
+    <section class="w-full grid md:grid-cols-3 gap-4">
+        <div class="bg-white whitespace-no-wrap rounded-lg shadow dark:border ">
+            <div class="text-xs font-bold tracking-wide px-4 py-3 text-left text-black-500  border-b dark:border-gray-700 bg-gray-50 dark:text-black-400 dark:bg-gray-800">
+                <label> Track Order </label>
+            </div>
+            <div class="max-w-sm mx-auto p-6 bg-white border border-gray-200">
+                <!-- Order and Tracking IDs -->
+                <div class="flex justify-between items-center mb-6">
+                <div>
+                    <p class="text-sm font-medium text-gray-600">Order ID:</p>
+                    <p class="text-lg font-semibold text-gray-900">{{order.orderNumber}}</p>
+                </div>
+                <!-- <div>
+                    <p class="text-sm font-medium text-gray-600">Tracking ID:</p>
+                    <p class="text-lg font-semibold text-gray-900">894152012012</p>
+                </div> -->
+                </div>
+            
+                <!-- Timeline -->
+                <div class="relative">
+                <!-- Vertical Line -->
+                <div class="absolute top-0 left-1.5 h-full w-0.5 bg-gray-200"></div>
+            
+                <!-- Order Placed -->
+                <div class="relative flex items-start mb-6">
+                    <div class="flex-shrink-0 w-8">
+                    <div class="w-3.5 h-3.5 bg-purple-600 rounded-full"></div>
+                    </div>
+                    <div class="ml-4">
+                    <p class="text-sm font-semibold text-gray-900">Order Placed</p>
+                    <p class="text-sm text-gray-600">April 21 2019 07:22 AM</p>
+                    </div>
+                </div>
+            
+                <!-- Packed -->
+                <div class="relative flex items-start mb-6">
+                    <div class="flex-shrink-0 w-8">
+                    <div class="w-3.5 h-3.5 bg-purple-600 rounded-full"></div>
+                    </div>
+                    <div class="ml-4">
+                    <p class="text-sm font-semibold text-gray-900">Packed</p>
+                    <p class="text-sm text-gray-600">April 22 2019 12:16 AM</p>
+                    </div>
+                </div>
+            
+                <!-- Shipped -->
+                <div class="relative flex items-start mb-6">
+                    <div class="flex-shrink-0 w-8">
+                    <div class="w-3.5 h-3.5 bg-purple-600 rounded-full ring-4 ring-white"></div>
+                    </div>
+                    <div class="ml-4">
+                    <p class="text-sm font-semibold text-gray-900">Shipped</p>
+                    <p class="text-sm text-gray-600">April 22 2019 05:16 PM</p>
+                    </div>
+                </div>
+            
+                <!-- Delivered -->
+                <div class="relative flex items-start">
+                    <div class="flex-shrink-0 w-8">
+                    <div class="w-3.5 h-3.5 bg-gray-400 rounded-full"></div>
+                    </div>
+                    <div class="ml-4">
+                    <p class="text-sm font-semibold text-gray-900">Delivered</p>
+                    <p class="text-sm text-gray-600">Estimated delivery within 3 days</p>
+                    </div>
+                </div>
+                </div>
+            
+                <!-- Show Details Button -->
+                <button
+                class="mt-6 w-full px-4 py-2 text-sm font-semibold text-white bg-purple-600 rounded-lg hover:bg-purple-700 focus:outline-none focus:ring-2 focus:ring-purple-400 focus:ring-offset-2">
+                Show Details
+                </button>
+            </div>
+            
+        </div>
+        <div class="bg-white rounded-lg shadow dark:border flex flex-col md:col-span-2">
+            <div class="text-xs font-bold tracking-wide px-4 py-3 text-left text-black-500  border-b dark:border-gray-700 bg-gray-50 dark:text-black-400 dark:bg-gray-800">
+                <label> Items from Order </label>
+            </div>
+            <div class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800 flex p-4 w-full whitespace-no-wrap justify-between items-center">
+                
+                <table class="w-full border-collapse border border-gray-200 grow-0 shrink-0 basis-auto" style="table-layout: fixed;">
+                    <thead>
+                        <tr>
+                            <th class="border border-gray-300 px-4 py-2 text-left">Product Name</th>
+                            <th class="border border-gray-300 px-4 py-2 text-left">Size</th>
+                            <th class="border border-gray-300 px-4 py-2 text-left">Color</th>
+                            <th class="border border-gray-300 px-4 py-2 text-left">Quantity</th>
+                            <th class="border border-gray-300 px-4 py-2 text-left">Price</th>
+                            <th class="border border-gray-300 px-4 py-2 text-left">Total</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let item of order.orderItems; let i = index">
+                            <td class="border border-gray-300 px-4 py-2">{{item.productName}}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{item.size}}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{item.color}}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{item.quantity}}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{item.price}}</td>
+                            <td class="border border-gray-300 px-4 py-2">{{item.totalAmount}}</td>
+                        </tr>
+                        <tr>
+                            <th colspan="5" class="text-right border border-gray-300 px-4 py-2">Total :</th>
+                            <td class="border border-gray-300 px-4 py-2">{{order.totalAmount}}</td>
+                        </tr>
+                        <tr>
+                            <th colspan="5" class="text-right border border-gray-300 px-4 py-2">Discount :</th>
+                            <td class="border border-gray-300 px-4 py-2">{{order.discountAmount}}</td>
+                        </tr>
+                        <tr>
+                            <th colspan="5" class="text-right border border-gray-300 px-4 py-2">Shipping :</th>
+                            <td class="border border-gray-300 px-4 py-2">{{order.shippingAmount}}</td>
+                        </tr>
+                        <tr>
+                            <th colspan="5" class="text-right border border-gray-300 px-4 py-2">Net Amount :</th>
+                            <td class="border border-gray-300 px-4 py-2">{{order.netAmount}}</td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                
+            </div>
+        </div>
+        <div class="bg-white whitespace-no-wrap rounded-lg shadow dark:border h-[150px]">
+            <div class="text-xs font-bold tracking-wide px-4 py-3 text-left text-black-500  border-b dark:border-gray-700 bg-gray-50 dark:text-black-400 dark:bg-gray-800">
+                <label> Shipping Information</label>
+            </div>
+            <div class="bg-white w-full p-4">
+                <p class="text-base font-medium mb-2">{{order.customerName}}</p>
+                <p class="text-base font-medium mb-2"><span class="font-semibold">Address:</span> <span class="text-sm text-gray-600"> {{order.orderShippingAddress.fullAddress}}</span> </p>
+                <p class="text-base font-medium mb-2"><span class="font-semibold">Phone:</span> <span class="text-sm text-gray-600"> {{order.customer.phoneNumber}}</span>  </p>
+            </div>
+        </div>
+        <div class="bg-white rounded-lg shadow dark:border flex flex-col h-[100px]">
+            <div class="text-xs font-bold tracking-wide px-4 py-3 text-left text-black-500  border-b dark:border-gray-700 bg-gray-50 dark:text-black-400 dark:bg-gray-800">
+                <label> Billing Information </label>
+            </div>
+            <div class="bg-white w-full p-4">
+                <p class="text-base font-medium mb-2"><span class="font-semibold">Payment Type:</span> <span class="text-sm text-gray-600"> {{order.paymentType}}</span> </p>
+                <p class="text-base font-medium mb-2"><span class="font-semibold">Payment Status:</span> <span class="text-sm text-gray-600"> {{order.paymentStatus}}</span>  </p>
+                <p class="text-base font-medium mb-2"><span class="font-semibold">Payment TransactionId:</span> <span class="text-sm text-gray-600"> {{order.paymentTransactionId}}</span>  </p>
+            </div>
+        </div>
+        <div class="bg-white rounded-lg shadow dark:border flex flex-col h-[100px]">
+            <div class="text-xs font-bold tracking-wide px-4 py-3 text-left text-black-500  border-b dark:border-gray-700 bg-gray-50 dark:text-black-400 dark:bg-gray-800">
+                <label> Delivery Info </label>
+            </div>
+            <div class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800 w-1/2">
+
+            </div>
+        </div>
+    </section>
+    <section class="w-full grid grid-cols-1 sm:grid-cols-3 gap-4 mt-4">
+
+    </section>

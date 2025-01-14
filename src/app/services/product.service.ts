@@ -26,17 +26,15 @@ export class ProductService {
     return this.http.get<any>(apiUrl + "/Product/DeleteProductById", { headers: this.headers, params: params });
   }
 
-  addUpdateCategory(data: any): Observable<any> {
-    return this.http.post(apiUrl + '/Category/AddUpdateCategory', data, {
-      headers: this.headers,
-    });
+  addUpdateProduct(data: any): Observable<any> {
+    return this.http.post(apiUrl + '/Product/AddUpdateProduct', data);
   }
   getProduct(id: number): Observable<IProduct> {
     if (id === 0) {
       return of(this.initializedClient());
     } else {
       return this.http
-        .get<IProduct>(apiUrl + '/Category/GetProductById?ProductId=' + id, {
+        .get<IProduct>(apiUrl + '/Product/GetProductById?ProductId=' + id, {
           headers: this.headers,
         })
         .pipe(
@@ -58,9 +56,10 @@ export class ProductService {
       urlSlug:'',
       description: '',
       categoryId: 0,
-      price: '',
-      stockQuantity: '',
+      price: 0,
+      stockQuantity: 0,
       status:'',
+      productVariants: [],
       row: '',
       totalRowCount:'',
       flag: 0

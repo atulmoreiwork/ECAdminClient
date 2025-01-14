@@ -13,6 +13,20 @@ import { CategoryDeleteComponent } from './category/category-delete/category-del
 import { HttpClientModule } from '@angular/common/http';
 import { AddEditProductComponent } from './product/add-edit-product/add-edit-product.component';
 import { QuillModule } from 'ngx-quill';
+import { SvgComponent } from '../shared/svg/svg.component';
+import { DragDropImagesComponent } from '../shared/drag-drop-images/drag-drop-images.component';
+import { ExcludeDeletedPipe } from '../shared/pipe/exclude-deleted.pipe';
+import { OrderListComponent } from './order/order-list/order-list.component';
+import { OrderDetailsComponent } from './order/order-details/order-details.component';
+import { CustomerListComponent } from './customer/customer-list/customer-list.component';
+import { CustomerAddEditComponent } from './customer/customer-add-edit/customer-add-edit.component';
+import { CustomerDeleteComponent } from './customer/customer-delete/customer-delete.component';
+import { RolesListComponent } from './adminusers/roles/roles-list.component';
+import { RolesAddEditComponent } from './adminusers/roles/roles-add-edit.component';
+import { UsersListComponent } from './adminusers/users/users-list.component';
+import { UsersAddEditComponent } from './adminusers/users/users-add-edit.component';
+import { UsersImportsComponent } from './adminusers/imports/users-imports.component';
+import { AdminusersTabComponent } from './adminusers/adminusers-tab.component';
 
 
  const routes: Routes = [
@@ -22,9 +36,18 @@ import { QuillModule } from 'ngx-quill';
     children:[
         { path: 'dashboard', component: DashboardComponent  },       
         { path: 'category', component: CategoryListComponent },
-        { path: 'categoryaddedit/:id', component: CategoryAddEditComponent },
-        { path: 'products', component: ProductListComponent  },
-        { path: 'productaddedit/:id', component: AddEditProductComponent  },   
+        { path: 'category/categoryaddedit/:id', component: CategoryAddEditComponent },
+        { path: 'product', component: ProductListComponent  },
+        { path: 'product/productaddedit/:id', component: AddEditProductComponent  },   
+        { path: 'order', component: OrderListComponent  },
+        { path: 'order/orderdetails/:id', component: OrderDetailsComponent  },   
+        { path: 'customer', component: CustomerListComponent  },
+        { path: 'customer/customeraddedit/:id', component: CustomerAddEditComponent  },  
+        { path: 'user', component: RolesListComponent },
+        { path: 'user/roleaddedit/:id', component: RolesAddEditComponent },
+        { path: 'user/adminusers', component: UsersListComponent },
+        { path: 'user/useraddedit/:id', component: UsersAddEditComponent },
+        { path: 'user/adminuserimports', component: UsersImportsComponent }  
     ]    
   }];
 
@@ -34,7 +57,21 @@ import { QuillModule } from 'ngx-quill';
     CategoryListComponent,
     CategoryDeleteComponent,
     ProductListComponent,
-    AddEditProductComponent
+    AddEditProductComponent,
+    SvgComponent,
+    DragDropImagesComponent,
+    ExcludeDeletedPipe,
+    OrderListComponent,
+    OrderDetailsComponent,
+    CustomerListComponent,
+    CustomerAddEditComponent,
+    CustomerDeleteComponent,
+    AdminusersTabComponent,
+    RolesListComponent,
+    RolesAddEditComponent,
+    UsersListComponent,
+    UsersAddEditComponent,
+    UsersImportsComponent
   ],
   imports: [
     CommonModule,
@@ -44,7 +81,7 @@ import { QuillModule } from 'ngx-quill';
     FormsModule,
     ReactiveFormsModule,
     HttpClientModule,
-    QuillModule.forRoot()
+    QuillModule.forRoot()    
   ]
 })
 export class FeaturesModule { }

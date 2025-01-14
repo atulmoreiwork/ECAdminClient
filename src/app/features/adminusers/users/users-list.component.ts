@@ -1,25 +1,20 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IProduct } from '../../../models/product.model';
+import { Router } from '@angular/router';
 import { CmTableComponent } from '../../../shared/table/cm-table/cm-table.component';
 import { PopupComponent } from '../../../shared/popup/popup.component';
-import { FilterDetails, GridConfig, SortModel } from '../../../shared/table/table.model';
-import { ProductService } from '../../../services/product.service';
-import { Router } from '@angular/router';
-import { PopUpConfig, PopUpConfigFactory } from '../../../shared/popup/popupconfig.model';
-
+import { GridConfig } from '../../../shared/table/table.model';
+import { UsersService } from '../../../services/users.service';
+import { FilterDetails, SortModel } from '../../../shared/table/table.model';
 @Component({
-  selector: 'app-product-list',
- // standalone: true,
- // imports: [],
-  templateUrl: './product-list.component.html',
-  styleUrl: './product-list.component.css'
+  selector: 'app-users-list',
+  templateUrl: './users-list.component.html',
+  styleUrls: ['./users-list.component.css']
 })
-export class ProductListComponent implements OnInit{
+export class UsersListComponent implements OnInit {
   @ViewChild(CmTableComponent) child?: CmTableComponent;
   @ViewChild('popup') popup?: PopupComponent;
   gridConfig: GridConfig = new GridConfig();
-  product!:IProduct;
-  constructor(private productService: ProductService, private router: Router){
+  constructor(private usersService: UsersService, private router: Router){
    this.tableObject.gridConfig = this.gridConfig;    
   }
   ngOnInit(): void 
@@ -44,7 +39,7 @@ export class ProductListComponent implements OnInit{
     pageAccessList: [],
     totalRecordsText:'',
     pageNumber: 1,
-    pageSize: 5,
+    pageSize: 10,
   }
  
   gridFilter: any = {
@@ -54,9 +49,12 @@ export class ProductListComponent implements OnInit{
   }
   
   pageChangeEvent($eve: any){
+    //console.log("pageChangeEvent:" + $eve);
+    //console.log("filterObject: " + JSON.stringify(this.tableObject.filter));
     this.fillFilterObject();
   }
   pageSizeChangeEvent($eve: any){
+    //console.log("pageSizeChangeEvent:" + $eve);
     this.fillFilterObject();
   }
 
@@ -68,22 +66,21 @@ export class ProductListComponent implements OnInit{
       objFilter.colId="userid"; objFilter.name="userid"; objFilter.value= "";  objFilter.type= "num";
       this.tableObject.filter.push(objFilter);
     }
-    this.getCategoryData();
+    this.getUsersData();
   }
 
-  getCategoryData(): void 
+  getUsersData(): void 
   {      
-    //debugger;
     if(this.gridConfig.isServerSidePagination == false){ this.gridFilter.Filter =  this.tableObject.filter; this.gridFilter.PageNumber= 0;  this.gridFilter.PageSize = 0;  }
     else { this.gridFilter.Filter =  this.tableObject.filter;
            this.gridFilter.PageNumber= this.tableObject.pageNumber;  
            this.gridFilter.PageSize = this.tableObject.pageSize;}
 
-    this.productService.getAllProducts(this.gridFilter)
+    this.usersService.getUsers(this.gridFilter)
       .subscribe({ next: (data: any) => {
-          if(data.success == true)
+          if(data.isError == false)
           {
-           // console.log("category Data: " + JSON.stringify(data));
+            console.log("Users Data: " + JSON.stringify(data));
            this.tableObject.totalItems = data.result.totalItems;
            this.tableObject.columns = data.result.columns;   
            this.tableObject.filter = data.result.filter;      
@@ -96,29 +93,6 @@ export class ProductListComponent implements OnInit{
       });
   }
 
-  AddNewProduct(){ this.router.navigate(['product/productaddedit/0']); } 
+  AddNewUser(){ this.router.navigate(['user/useraddedit/0']); } 
 
-  popupConfig: PopUpConfig = PopUpConfigFactory.getPopUpConfig({
-    header: 'Delete User'
-  });
-
-  productDelete(obj: any) {
-    this.popupConfig.isShowPopup = true;
-    this.popupConfig.header = 'Confirm';
-    this.popupConfig.isShowHeaderText = true;
-    this.popupConfig.isConfirmBox = true;
-    this.popupConfig.popupFor = 'small';
-    this.popup?.open(this.popupConfig);
-    this.product = obj;
-  }
-  close($event: boolean) 
-  { 
-    this.popupConfig.isShowPopup = false;
-  }
-  getReturnMessage(message: any) {
-    if(message == "delete"){
-      this.popupConfig.isShowPopup = false;
-      this.fillFilterObject();
-    }
-  }
 }

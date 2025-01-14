@@ -17,7 +17,7 @@ export class CategoryAddEditComponent implements OnInit{
   parentCategoryId:number = 0;
   parentCategoryDropDownList: IParentCategory[] = [];
   initialStatus: string = '';
-    
+  headerName: string = ''; buttonName: string = '';  
   emailRegex = '^[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$'; 
   AddNewCategoryForm!: FormGroup;
   get f(): { [key: string]: AbstractControl } {
@@ -30,6 +30,8 @@ export class CategoryAddEditComponent implements OnInit{
   ngOnInit(): void{
     this.acRoute.params.subscribe((e) => {
       this.id = +e['id'];
+      if(this.id > 0){this.headerName = "Edit Category"; this.buttonName = "Update";}
+      else {this.headerName = "Add Category";  this.buttonName = "Save";}
       this.categoryService.getCategory(this.id).subscribe((data) => {
         //console.log(data);
         if (data == undefined || data == null) {
@@ -55,11 +57,6 @@ export class CategoryAddEditComponent implements OnInit{
     //this.getParentCategoryList();
   }
 
-  gridFilter: any = {
-    Filter:[],
-    PageNumber: 0,
-    PageSize: 0
-  } 
 
   getParentCategoryList(){    
     this.categoryService.getParentCategories()

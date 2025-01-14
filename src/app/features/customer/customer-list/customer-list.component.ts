@@ -1,25 +1,25 @@
 import { Component, OnInit, ViewChild } from '@angular/core';
-import { IProduct } from '../../../models/product.model';
 import { CmTableComponent } from '../../../shared/table/cm-table/cm-table.component';
 import { PopupComponent } from '../../../shared/popup/popup.component';
 import { FilterDetails, GridConfig, SortModel } from '../../../shared/table/table.model';
-import { ProductService } from '../../../services/product.service';
+import { ICustomer } from '../../../models/customer.model';
+import { CustomerService } from '../../../services/customer.service';
 import { Router } from '@angular/router';
 import { PopUpConfig, PopUpConfigFactory } from '../../../shared/popup/popupconfig.model';
 
 @Component({
-  selector: 'app-product-list',
- // standalone: true,
- // imports: [],
-  templateUrl: './product-list.component.html',
-  styleUrl: './product-list.component.css'
+  selector: 'app-customer-list',
+  //standalone: true,
+  //imports: [],
+  templateUrl: './customer-list.component.html',
+  styleUrl: './customer-list.component.css'
 })
-export class ProductListComponent implements OnInit{
+export class CustomerListComponent implements OnInit {
   @ViewChild(CmTableComponent) child?: CmTableComponent;
   @ViewChild('popup') popup?: PopupComponent;
   gridConfig: GridConfig = new GridConfig();
-  product!:IProduct;
-  constructor(private productService: ProductService, private router: Router){
+  customer!:ICustomer;
+  constructor(private customerService: CustomerService, private router: Router){
    this.tableObject.gridConfig = this.gridConfig;    
   }
   ngOnInit(): void 
@@ -54,24 +54,27 @@ export class ProductListComponent implements OnInit{
   }
   
   pageChangeEvent($eve: any){
+    //console.log("pageChangeEvent:" + $eve);
+    //console.log("filterObject: " + JSON.stringify(this.tableObject.filter));
     this.fillFilterObject();
   }
   pageSizeChangeEvent($eve: any){
+    //console.log("pageSizeChangeEvent:" + $eve);
     this.fillFilterObject();
   }
 
   fillFilterObject(){
-    let index = this.tableObject.filter.findIndex(((obj: { colId: string; }) => obj.colId.toLowerCase() == "userid"));
+    let index = this.tableObject.filter.findIndex(((obj: { colId: string; }) => obj.colId.toLowerCase() == "customerid"));
     if(index > -1){ this.tableObject.filter[index].value = 1;  }
     if(this.tableObject.filter.length <=0){
       var objFilter = new FilterDetails();  
-      objFilter.colId="userid"; objFilter.name="userid"; objFilter.value= "";  objFilter.type= "num";
+      objFilter.colId="customerid"; objFilter.name="customerid"; objFilter.value= "";  objFilter.type= "num";
       this.tableObject.filter.push(objFilter);
     }
-    this.getCategoryData();
+    this.getCustomerData();
   }
 
-  getCategoryData(): void 
+  getCustomerData(): void 
   {      
     //debugger;
     if(this.gridConfig.isServerSidePagination == false){ this.gridFilter.Filter =  this.tableObject.filter; this.gridFilter.PageNumber= 0;  this.gridFilter.PageSize = 0;  }
@@ -79,7 +82,7 @@ export class ProductListComponent implements OnInit{
            this.gridFilter.PageNumber= this.tableObject.pageNumber;  
            this.gridFilter.PageSize = this.tableObject.pageSize;}
 
-    this.productService.getAllProducts(this.gridFilter)
+    this.customerService.getAllCustomers(this.gridFilter)
       .subscribe({ next: (data: any) => {
           if(data.success == true)
           {
@@ -96,27 +99,27 @@ export class ProductListComponent implements OnInit{
       });
   }
 
-  AddNewProduct(){ this.router.navigate(['product/productaddedit/0']); } 
+  AddNewCustomer(){ this.router.navigate(['customer/customeraddedit/0']); } 
 
   popupConfig: PopUpConfig = PopUpConfigFactory.getPopUpConfig({
-    header: 'Delete User'
+    header: 'Delete Customer'
   });
 
-  productDelete(obj: any) {
+  customerDelete(obj: any) {
     this.popupConfig.isShowPopup = true;
     this.popupConfig.header = 'Confirm';
     this.popupConfig.isShowHeaderText = true;
     this.popupConfig.isConfirmBox = true;
     this.popupConfig.popupFor = 'small';
     this.popup?.open(this.popupConfig);
-    this.product = obj;
+    this.customer = obj;
   }
   close($event: boolean) 
   { 
     this.popupConfig.isShowPopup = false;
   }
   getReturnMessage(message: any) {
-    if(message == "delete"){
+     if(message == "delete"){
       this.popupConfig.isShowPopup = false;
       this.fillFilterObject();
     }

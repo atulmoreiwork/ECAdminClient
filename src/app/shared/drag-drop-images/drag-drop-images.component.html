@@ -1,0 +1,14 @@
+<div   (dragover)="onDragOver($event)" (drop)="onDrop($event)"  (dragleave)="onDragLeave($event)"
+[class.drag-over]="isDragOver">
+<p *ngIf="!images.length">Drag & Drop images here or click to upload</p>
+<input type="file" accept=".jpg,.jpeg,.png,.svg"  multiple (change)="onFileSelect($event)" class="file-input pointer-events: auto;" />
+</div>
+
+<p *ngIf="errorMessage" class="error-message">{{ errorMessage }}</p>
+
+<div class="image-preview" *ngFor="let image of images; let i = index">
+   
+    <button (click)="deleteImage(i)" class="delete-button">Delete</button>
+</div>
+
+

@@ -26,14 +26,47 @@
           [routerLink]="item.pageURL"
           routerLinkActive="bg-white text-ec_themecolor_secondary"
           class="inline-flex items-center justify-center px-3 py-3 rounded-lg">
-          <svg  aria-hidden="true" fill="none" viewBox="0 0 24 24"  class="h-6 w-6" 
+          <section [ngSwitch]="item.name">
+            <svg *ngSwitchCase="'User'" aria-hidden="true" fill="none" viewBox="0 0 24 24"  class="h-6 w-6" 
             [class.stroke-ec_stroke_purple]="router.isActive(item.pageURL, true)"
-            [class.stroke-ec_stroke_gray]="!router.isActive(item.pageURL, true)">
-            <path
+            [class.stroke-ec_stroke_gray]="!router.isActive(item.pageURL, true)">            
+              <path  d="M12 12c2.76 0 5-2.24 5-5s-2.24-5-5-5-5 2.24-5 5 2.24 5 5 5zm0 2c-3.33 0-10 1.67-10 5v2h20v-2c0-3.33-6.67-5-10-5z"   fill="#969CBA" fill-opacity="0.2" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />         
+            </svg>
+            <svg *ngSwitchCase="'Customer'" aria-hidden="true" fill="none" viewBox="0 0 24 24"  class="h-6 w-6" 
+            [class.stroke-ec_stroke_purple]="router.isActive(item.pageURL, true)"
+            [class.stroke-ec_stroke_gray]="!router.isActive(item.pageURL, true)">            
+              <path  d="M6 2h12l1 4H5l1-4zM3 7h18l-1.5 9.5a2 2 0 0 1-2 1.5H6.5a2 2 0 0 1-2-1.5L3 7zm6 10a2 2 0 1 1-4 0 2 2 0 0 1 4 0zm10 0a2 2 0 1 1-4 0 2 2 0 0 1 4 0z"   fill="#969CBA" fill-opacity="0.2" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />         
+            </svg>
+            <svg *ngSwitchCase="'Category'" aria-hidden="true" fill="none" viewBox="0 0 24 24"  class="h-6 w-6" 
+              [class.stroke-ec_stroke_purple]="router.isActive(item.pageURL, true)"
+              [class.stroke-ec_stroke_gray]="!router.isActive(item.pageURL, true)">            
+                <path  d="M3 3h8v8H3V3zm10 0h8v8h-8V3zM3 13h8v8H3v-8zm10 0h8v8h-8v-8z"   fill="#969CBA" fill-opacity="0.2" stroke-width="2" stroke-linecap="round"
+                stroke-linejoin="round" />         
+            </svg>
+            <svg *ngSwitchCase="'Product'" aria-hidden="true" fill="none" viewBox="0 0 24 24"  class="h-6 w-6" 
+            [class.stroke-ec_stroke_purple]="router.isActive(item.pageURL, true)"
+            [class.stroke-ec_stroke_gray]="!router.isActive(item.pageURL, true)">            
+              <path  d="M21 8.7V15c0 1.1-.9 2-2 2h-5v3.3c0 .5-.5.9-1 .7l-8-4c-.4-.2-.7-.6-.7-1.1V9c0-.5.3-.9.7-1.1l8-4c.5-.2 1 .1 1 .7V8h5c1.1 0 2 .9 2 2zm-9-1.7V4.4L5 8v2.3l7-3.3zm2 0L22 8v2.3l-8-3.3zM4 10.5v5.2L10 19v-5.3L4 10.5z"   fill="#969CBA" fill-opacity="0.2" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />         
+            </svg>
+            <svg *ngSwitchCase="'Order'" aria-hidden="true" fill="none" viewBox="0 0 24 24"  class="h-6 w-6" 
+            [class.stroke-ec_stroke_purple]="router.isActive(item.pageURL, true)"
+            [class.stroke-ec_stroke_gray]="!router.isActive(item.pageURL, true)">            
+              <path  d="M7 2a2 2 0 00-2 2v16a2 2 0 002 2h10a2 2 0 002-2V4a2 2 0 00-2-2H7zm5 2c.83 0 1.5.67 1.5 1.5S12.83 7 12 7s-1.5-.67-1.5-1.5S11.17 4 12 4zm-4.5 5h9v1.5h-9V9zm0 4h9v1.5h-9V13zm0 4h9v1.5h-9V17z"   fill="#969CBA" fill-opacity="0.2" stroke-width="2" stroke-linecap="round"
+              stroke-linejoin="round" />         
+            </svg>
+            <svg *ngSwitchDefault aria-hidden="true" fill="none" viewBox="0 0 24 24"  class="h-6 w-6" 
+            [class.stroke-ec_stroke_purple]="router.isActive(item.pageURL, true)"
+            [class.stroke-ec_stroke_gray]="!router.isActive(item.pageURL, true)">            
+              <path 
               d="M22 18.2222C22 18.6937 21.7893 19.1459 21.4142 19.4793C21.0391 19.8127 20.5304 20 20 20H4C3.46957 20 2.96086 19.8127 2.58579 19.4793C2.21071 19.1459 2 18.6937 2 18.2222V5.77778C2 5.30628 2.21071 4.8541 2.58579 4.5207C2.96086 4.1873 3.46957 4 4 4H9L11 6.66667H20C20.5304 6.66667 21.0391 6.85397 21.4142 7.18737C21.7893 7.52076 22 7.97295 22 8.44444V18.2222Z"
               fill="#969CBA" fill-opacity="0.2" stroke-width="2" stroke-linecap="round"
-              stroke-linejoin="round" />
-          </svg>
+              stroke-linejoin="round" />      
+            </svg>
+          </section>
+
           <span *ngIf="isSubmenuOpen" class="mx-4 font-medium " [class.text-ec_themecolor_primary]="router.isActive(item.pageURL, true)"
           [class.text-white]="!router.isActive(item.pageURL, true)">{{ item.name }}</span>
         </a>
