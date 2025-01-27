@@ -6,11 +6,14 @@ import { AppRoutingModule } from './app-routing.module';
 import { CoreModule } from './core/core.module';
 import { SidebarComponent } from './shared/sidebar/sidebar.component';
 import { MenuLayoutComponent } from './shared/menu-layout/menu-layout.component';
-import { HttpClientModule } from '@angular/common/http';
+import { HTTP_INTERCEPTORS, HttpClientModule } from '@angular/common/http';
 import { QuillModule } from 'ngx-quill';
+import { LoadersInterceptor } from './shared/loader/loaders.interceptor';
+import { LoaderComponent } from './shared/loader/loader.component';
+
 
 @NgModule({
-  declarations: [AppComponent],
+  declarations: [AppComponent, LoaderComponent],
   imports: [
     CommonModule,
     BrowserModule,
@@ -22,6 +25,7 @@ import { QuillModule } from 'ngx-quill';
     QuillModule.forRoot()
   ],
   schemas: [CUSTOM_ELEMENTS_SCHEMA],
+  providers: [{ provide: HTTP_INTERCEPTORS, useClass: LoadersInterceptor, multi: true }],
   bootstrap: [AppComponent],
 })
 export class AppModule { }

@@ -27,6 +27,8 @@ import { UsersListComponent } from './adminusers/users/users-list.component';
 import { UsersAddEditComponent } from './adminusers/users/users-add-edit.component';
 import { UsersImportsComponent } from './adminusers/imports/users-imports.component';
 import { AdminusersTabComponent } from './adminusers/adminusers-tab.component';
+import { RoleDeleteComponent } from './adminusers/roles/role-delete.component';
+import { UserDeleteComponent } from './adminusers/users/user-delete.component';
 
 
  const routes: Routes = [
@@ -43,8 +45,8 @@ import { AdminusersTabComponent } from './adminusers/adminusers-tab.component';
         { path: 'order/orderdetails/:id', component: OrderDetailsComponent  },   
         { path: 'customer', component: CustomerListComponent  },
         { path: 'customer/customeraddedit/:id', component: CustomerAddEditComponent  },  
-        { path: 'user', component: RolesListComponent },
-        { path: 'user/roleaddedit/:id', component: RolesAddEditComponent },
+        { path: 'user/roles', component: RolesListComponent },
+        { path: 'user/roles/:id', component: RolesAddEditComponent },
         { path: 'user/adminusers', component: UsersListComponent },
         { path: 'user/useraddedit/:id', component: UsersAddEditComponent },
         { path: 'user/adminuserimports', component: UsersImportsComponent }  
@@ -71,7 +73,9 @@ import { AdminusersTabComponent } from './adminusers/adminusers-tab.component';
     RolesAddEditComponent,
     UsersListComponent,
     UsersAddEditComponent,
-    UsersImportsComponent
+    UsersImportsComponent,
+    RoleDeleteComponent,
+    UserDeleteComponent
   ],
   imports: [
     CommonModule,

@@ -5,6 +5,8 @@ import { PopupComponent } from '../../../shared/popup/popup.component';
 import { GridConfig } from '../../../shared/table/table.model';
 import { UsersService } from '../../../services/users.service';
 import { FilterDetails, SortModel } from '../../../shared/table/table.model';
+import { PopUpConfig, PopUpConfigFactory } from '../../../shared/popup/popupconfig.model';
+import { IUsers } from '../../../models/admin-users';
 @Component({
   selector: 'app-users-list',
   templateUrl: './users-list.component.html',
@@ -14,6 +16,7 @@ export class UsersListComponent implements OnInit {
   @ViewChild(CmTableComponent) child?: CmTableComponent;
   @ViewChild('popup') popup?: PopupComponent;
   gridConfig: GridConfig = new GridConfig();
+  user!: IUsers;
   constructor(private usersService: UsersService, private router: Router){
    this.tableObject.gridConfig = this.gridConfig;    
   }
@@ -78,9 +81,9 @@ export class UsersListComponent implements OnInit {
 
     this.usersService.getUsers(this.gridFilter)
       .subscribe({ next: (data: any) => {
-          if(data.isError == false)
+          if(data.success == true)
           {
-            console.log("Users Data: " + JSON.stringify(data));
+           // console.log("Users Data: " + JSON.stringify(data));
            this.tableObject.totalItems = data.result.totalItems;
            this.tableObject.columns = data.result.columns;   
            this.tableObject.filter = data.result.filter;      
@@ -94,5 +97,27 @@ export class UsersListComponent implements OnInit {
   }
 
   AddNewUser(){ this.router.navigate(['user/useraddedit/0']); } 
-
+  popupConfig: PopUpConfig = PopUpConfigFactory.getPopUpConfig({
+      header: 'Delete User'
+    });
+  
+    userDelete(obj: any) {
+      this.popupConfig.isShowPopup = true;
+      this.popupConfig.header = 'Confirm';
+      this.popupConfig.isShowHeaderText = true;
+      this.popupConfig.isConfirmBox = true;
+      this.popupConfig.popupFor = 'small';
+      this.popup?.open(this.popupConfig);
+      this.user = obj;
+    }
+    close($event: boolean) 
+    { 
+      this.popupConfig.isShowPopup = false;
+    }
+    getReturnMessage(message: any) {
+      if(message == "delete"){
+        this.popupConfig.isShowPopup = false;
+        this.fillFilterObject();
+      }
+    }
 }

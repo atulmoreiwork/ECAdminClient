@@ -4,6 +4,8 @@ import { CmTableComponent } from '../../../shared/table/cm-table/cm-table.compon
 import { PopupComponent } from '../../../shared/popup/popup.component';
 import { FilterDetails, GridConfig, SortModel } from '../../../shared/table/table.model';
 import { UsersService } from '../../../services/users.service';
+import { PopUpConfig, PopUpConfigFactory } from '../../../shared/popup/popupconfig.model';
+import { IRole } from '../../../models/admin-users';
 
 @Component({
   selector: 'app-roles-list',
@@ -14,6 +16,7 @@ export class RolesListComponent implements OnInit {
   @ViewChild(CmTableComponent) child?: CmTableComponent;
   @ViewChild('popup') popup?: PopupComponent;
   gridConfig: GridConfig = new GridConfig();
+  role!: IRole;
   constructor(private usersService: UsersService, private router: Router){
    this.tableObject.gridConfig = this.gridConfig;    
   }
@@ -66,24 +69,57 @@ export class RolesListComponent implements OnInit {
       objFilter.colId="userid"; objFilter.name="userid"; objFilter.value= "";  objFilter.type= "num";
       this.tableObject.filter.push(objFilter);
     }
-    this.getUsersData();
+    this.getRolesData();
   }
 
   data: any;
-  getUsersData(): void 
+  getRolesData(): void 
   {      
     if(this.gridConfig.isServerSidePagination == false){ this.gridFilter.Filter =  this.tableObject.filter; this.gridFilter.PageNumber= 0;  this.gridFilter.PageSize = 0;  }
     else { this.gridFilter.Filter =  this.tableObject.filter;
            this.gridFilter.PageNumber= this.tableObject.pageNumber;  
            this.gridFilter.PageSize = this.tableObject.pageSize;}
-       this.data = JSON.parse('{"statusCode":200,"message":"POST Request successful.","isError":false,"result":{"pageNumber":1,"pageSize":10,"totalItems":3,"totalRecordsText":"3 Records Found","columns":[{"name":"collegeId","displayName":"College Id","isDisplayOnGrid":false,"html":false,"htmlName":"","type":"num","isSorting":true,"filter":{"isFiltering":true,"filterInputType":"input","filterType":"num","filterName":"collegeId","filterFrom":"","filterTo":""},"insertDetails":{"isDisplayOnGrid":false,"colId":null,"name":null,"value":null,"type":null}},{"name":"roleName","displayName":"Role","isDisplayOnGrid":true,"html":false,"htmlName":"","type":"cs","isSorting":true,"filter":{"isFiltering":true,"filterInputType":"input","filterType":"cs","filterName":"roleName","filterFrom":"","filterTo":""},"insertDetails":{"isDisplayOnGrid":false,"colId":null,"name":null,"value":null,"type":null}},{"name":"userCount","displayName":"#of Users","isDisplayOnGrid":true,"html":false,"htmlName":"","type":"num","isSorting":true,"filter":{"isFiltering":true,"filterInputType":"input","filterType":"num","filterName":"userCount","filterFrom":"","filterTo":""},"insertDetails":{"isDisplayOnGrid":false,"colId":null,"name":null,"value":null,"type":null}},{"name":"action","displayName":"Action","isDisplayOnGrid":true,"html":true,"htmlName":"Action","type":"cs","isSorting":false,"filter":{"isFiltering":false,"filterInputType":"input","filterType":"cs","filterName":"Action","filterFrom":"","filterTo":""},"insertDetails":{"isDisplayOnGrid":false,"colId":null,"name":null,"value":null,"type":null}}],"filter":[{"colId":"collegeId","name":"collegeId","value":"","type":"num"},{"colId":"roleName","name":"roleName","value":"","type":"cs"},{"colId":"userCount","name":"userCount","value":"","type":"num"}],"data":[{"roleId":2426,"roleName":"Approver","userCount":1,"row":"3","collegeId":"5430","totalRowCount":"3"},{"roleId":2409,"roleName":"Instructor","userCount":2,"row":"2","collegeId":"5430","totalRowCount":"3"},{"roleId":1,"roleName":"Admin","userCount":12,"row":"1","collegeId":"5430","totalRowCount":"3"}]}}');
-           this.tableObject.totalItems = this.data.result.totalItems;
-           this.tableObject.columns = this.data.result.columns;   
-           this.tableObject.filter = this.data.result.filter;      
-           this.tableObject.data = this.data.result.data;
-           this.tableObject.rows = this.data.result.data;      
-           this.child?.GridChanges();  
+
+           this.usersService.getAllRoles(this.gridFilter)
+           .subscribe({ next: (data: any) => {
+               if(data.success == true)
+               {
+                // console.log("category Data: " + JSON.stringify(data));
+                this.tableObject.totalItems = data.result.totalItems;
+                this.tableObject.columns = data.result.columns;   
+                this.tableObject.filter = data.result.filter;      
+                this.tableObject.data = data.result.data;
+                this.tableObject.rows = data.result.data;      
+                this.child?.GridChanges();            
+               } 
+             },
+             error: (err: any) => {console.log(err); }
+           });
   }
 
-  AddNewRole(){ this.router.navigate(['user/roleaddedit/0']); } 
+  AddNewRole(){ this.router.navigate(['user/roles/0']); } 
+
+   popupConfig: PopUpConfig = PopUpConfigFactory.getPopUpConfig({
+      header: 'Delete User'
+    });
+  
+    roleDelete(obj: any) {
+      this.popupConfig.isShowPopup = true;
+      this.popupConfig.header = 'Confirm';
+      this.popupConfig.isShowHeaderText = true;
+      this.popupConfig.isConfirmBox = true;
+      this.popupConfig.popupFor = 'small';
+      this.popup?.open(this.popupConfig);
+      this.role = obj;
+    }
+    close($event: boolean) 
+    { 
+      this.popupConfig.isShowPopup = false;
+    }
+    getReturnMessage(message: any) {
+      if(message == "delete"){
+        this.popupConfig.isShowPopup = false;
+        this.fillFilterObject();
+      }
+    }
 }

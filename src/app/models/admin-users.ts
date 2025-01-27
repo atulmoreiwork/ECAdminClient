@@ -1,55 +1,31 @@
 
 export interface IUsers {
-    adminUserId: number;
-    loginName: string;
-    password: string;
+    userId: number;
+    roleId: number;
+    roleName: string;
     firstName: string;
     lastName: string;
-    collegeId: string;
-    userType: string;
-    roleId: string;
-    departmentName: string;
-    deptSectionName: string;
-    roleName: string;
-    groupId: string;
+    email: string;
+    password: string;   
+    phoneNumber: string;  
+    status: string;  
     row: string;
     totalRowCount: string;
     flag: number;
 }
-export interface IOrganizations 
-{
-    groupId: number;
-    groupName: string;
-    collegeId: number;
-    showNewUserTab: string;
-    showAssessmentsTab: string;
-    masterCourseId: number;
-    assessmentTabName: string;
-    organizationType: string;
-    organizationId: number;
-}
 
-export interface IFacilities
-{
-  collegeId: number;
-  collegeName: string;  
-}
 
-export interface IRoleMaster {
+export interface IRole {
     roleId: number;
     roleName: string;
+    roleDescription: string;
     userCount: number;
+    row: string;
+    totalRowCount: string;
+    flag: number;
 }
 
-export interface IUserRoles
-{
-    groupId: number;
-    collegeId:number;
-    roleId: number;
-    roleName: string;
-    userCount: number;
-    permissions: IPermissions[];
-}
+
 
 export interface IPermissions
 {

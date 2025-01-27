@@ -3,7 +3,7 @@
       <div class="sm:flex sm:items-center sm:justify-between">
         <div class="text-center sm:text-left">
           <h1 class="text-2xl font-bold text-gray-900 sm:text-3xl">
-           Admin Users / New Registration
+           Admin Users / {{headerName}}
           </h1>      
         </div>  
       </div>
@@ -15,33 +15,10 @@
       <label> Please enter details </label>
     </div>
     <div class="bg-white divide-y dark:divide-gray-700 dark:bg-gray-800">
-      <form [formGroup]="AddNewUserForm" (ngSubmit)="submitForm()" class="p-4">
-        <div class="mb-6">
-          <label for="organizationName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Organization</label>
-          <select formControlName="organizationName" [(ngModel)]="groupId" [attr.disabled]="isFilterShown===true ? 'disabled' : null"
-          (change)="chngeOrgDropDown($event)" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500" 
-          [ngClass]="{'is-invalid': f['organizationName'].invalid && submitted}">
-              <option value="">Select</option>
-              <option [value]="item.groupId"  *ngFor="let item of organizationDropDownList"> {{item.groupName}}</option>
-           </select> 
-           <div class="text-red-500" *ngIf="submitted && f['organizationName'].errors?.['required']">
-              Please select organization
-          </div>
-        </div>
-        <div class="mb-6">
-          <label for="facilityName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Facility</label>
-          <select formControlName="facilityName" [(ngModel)]="collegeId" (change)="changeFacilityDropDown($event)"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          [ngClass]="{'is-invalid': f['facilityName'].invalid && submitted}" [attr.disabled]="isFilterShown===true ? 'disabled' : null">
-              <option value="">Select</option>
-              <option [value]="item.collegeId" *ngFor="let item of facilityDropDownList"> {{item.collegeName}}</option>
-            </select>      
-            <div class="text-red-500" *ngIf="submitted && f['facilityName'].errors?.['required']">
-              Please select facility
-          </div>     
-        </div>
+      <form [formGroup]="AddNewUserForm" (ngSubmit)="submitForm()" class="p-4" *ngIf="AddNewUserForm">
         <div class="mb-6">
           <label for="firstName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">First Name</label>
-          <input type="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" formControlName="firstName" (input)="alphaNumberOnly($event)" (keypress)="alphaNumberOnly($event)" (paste)="onPaste($event)"
+          <input type="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" formControlName="firstName" 
           name="firstName" [ngClass]="{ 'is-invalid': submitted && f['firstName'].errors }" />     
           <div *ngIf="submitted && f['firstName'].errors" class="invalid-feedback">
             <div *ngIf="f['firstName'].errors['required']">Please enter first name</div>                              
@@ -56,12 +33,12 @@
           </div>    
         </div>
         <div class="mb-6">
-          <label for="loginName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Login Name</label>
-          <input type="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" formControlName="loginName"
-                        name="loginName" [ngClass]="{ 'is-invalid': submitted && f['loginName'].errors }" />     
-                        <div *ngIf="submitted && f['loginName'].errors" class="invalid-feedback">
-                          <div *ngIf="f['loginName'].errors['required']">Please enter login name</div> 
-                          <div *ngIf="f['loginName'].errors['pattern']">Email is invalid</div>                             
+          <label for="email" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Login Name</label>
+          <input type="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" formControlName="email"
+                        name="email" [ngClass]="{ 'is-invalid': submitted && f['email'].errors }" />     
+                        <div *ngIf="submitted && f['email'].errors" class="invalid-feedback">
+                          <div *ngIf="f['email'].errors['required']">Please enter login name</div> 
+                          <div *ngIf="f['email'].errors['pattern']">Email is invalid</div>                             
                         </div>    
         </div>
         <div class="mb-6">
@@ -74,7 +51,7 @@
         </div>
         <div class="mb-6">
           <label for="confirmPassword" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Confirm Password</label>
-          <input type="confirmPassword" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" formControlName="confirmPassword"
+          <input type="password" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" formControlName="confirmPassword"
           name="confirmPassword" [ngClass]="{ 'is-invalid': submitted && f['confirmPassword'].errors }" />     
           <div *ngIf="submitted && f['confirmPassword'].errors" class="invalid-feedback">
             <div *ngIf="f['confirmPassword'].errors['required']">Please enter confirm password</div> 
@@ -82,18 +59,37 @@
           </div>
         </div>
         <div class="mb-6">
-          <label for="userRoleName" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Role</label>
-          <select formControlName="userRoleName" [(ngModel)]="roleId" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-          [ngClass]="{'is-invalid': f['userRoleName'].invalid && submitted}" >
+          <label for="roleId" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Role</label>
+          <select formControlName="roleId" [(ngModel)]="roleId" class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          [ngClass]="{'is-invalid': f['roleId'].invalid && submitted}" >
               <option value="">Select</option>
               <option [value]="item.roleId" *ngFor="let item of userRolesList"> {{item.roleName}}</option>
             </select>      
-            <div class="invalid-feedback" *ngIf="submitted && f['userRoleName'].errors?.['required']">
+            <div class="invalid-feedback" *ngIf="submitted && f['roleId'].errors?.['required']">
               Please select role
           </div>     
         </div>
-        <button type="submit" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800">Submit</button>
-        <button type="button" class="text-white bg-blue-700 hover:bg-blue-800 focus:ring-4 focus:outline-none focus:ring-blue-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-blue-600 dark:hover:bg-blue-700 dark:focus:ring-blue-800 ml-2" (click)="cancel()">Cancel</button>
+        <div class="mb-6">
+          <label for="phoneNumber" class="block mb-2 text-sm font-medium text-gray-900 dark:text-white">Phone Number</label>
+          <input type="text" class="shadow-sm bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 dark:shadow-sm-light" formControlName="phoneNumber"
+          name="phoneNumber" [ngClass]="{ 'is-invalid': submitted && f['phoneNumber'].errors }" [maxlength]="10" />     
+          <div *ngIf="submitted && f['phoneNumber'].errors" class="invalid-feedback">
+            <div *ngIf="f['phoneNumber'].errors['required']">Please enter phone number</div>                              
+          </div>    
+        </div>
+        <div class="mb-6">
+          <label for="status" class="block mb-2 text-sm font-medium text-gray-700">Status</label>
+          <select id="status" formControlName="status"  class="bg-gray-50 border border-gray-300 text-gray-900 text-sm rounded-lg focus:ring-purple-500 focus:border-purple-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-purple-500 dark:focus:border-purple-500">
+            <option value="">Select Status</option>
+            <option value="active">Active</option>
+            <option value="inactive">Inactive</option>
+          </select>
+          <div *ngIf="submitted && AddNewUserForm.get('status')?.invalid" class="mt-1 text-red-500">
+            Status is required.
+          </div>
+        </div>
+        <button type="submit" class="text-white bg-ec_button hover:bg-ec_button-hover focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-purple-600 dark:hover:bg-ec_button-hover dark:focus:ring-purple-800">Submit</button>
+        <button type="button" class="text-white bg-ec_button hover:bg-ec_button-hover focus:ring-4 focus:outline-none focus:ring-purple-300 font-medium rounded-lg text-sm px-5 py-2.5 text-center dark:bg-purple-600 dark:hover:bg-ec_button-hover dark:focus:ring-purple-800 ml-2" (click)="cancel()">Cancel</button>
       </form>
     </div>
   </div> 

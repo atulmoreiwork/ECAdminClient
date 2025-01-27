@@ -1,40 +1,44 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Router } from '@angular/router';
-import { catchError, delay, map, Observable, of } from 'rxjs';
+import { catchError, map, Observable, of } from 'rxjs';
 import { environment } from '../../environments/environment';
-import { IUsers } from '../models/admin-users';
+import { IRole } from '../models/admin-users';
 
 const apiUrl = `${environment.apiUrl}`; 
 @Injectable({
   providedIn: 'root'
 })
-export class UsersService {
+export class RoleService {
 
   headers = new HttpHeaders().set('Content-Type', 'application/json');
   constructor(private http: HttpClient, public router: Router) {}
+  
+
+  getRoles(): Observable<any> {
+    return this.http.get<any>(apiUrl + "/Role/GetRoles");
+  }
 
   getAllRoles(data: any): Observable<any> {
     return this.http.post<any>(apiUrl + "/Role/GetAllRoles", data, { headers: this.headers });
   }
-  
-  getUsers(data: any): Observable<any> {
-    return this.http.post<any>(apiUrl + "/Users/GetAllUsers", data, { headers: this.headers });
+
+  deleteRoleById(params: any): Observable<any> {
+    return this.http.get<any>(apiUrl + "/Role/DeleteRoleById", { headers: this.headers, params: params });
   }
-  addUpdateUser(data: any): Observable<any> {
-    return this.http.post(apiUrl + '/Users/AddUpdateUser', data, {
+
+  addUpdateRole(data: any): Observable<any> {
+    return this.http.post(apiUrl + '/Role/AddUpdateRole', data, {
       headers: this.headers,
     });
   }
-  deleteUserById(params: any): Observable<any> {
-    return this.http.get<any>(apiUrl + "/User/DeleteUserById", { headers: this.headers, params: params });
-  }
-  getUser(id: number): Observable<IUsers> {
+  
+  getRole(id: number): Observable<IRole> {
     if (id === 0) {
       return of(this.initializedClient());
     } else {
       return this.http
-        .get<IUsers>(apiUrl + '/Users/GetUserById?UserId=' + id, {
+        .get<IRole>(apiUrl + '/Role/GetRoleById?RoleId=' + id, {
           headers: this.headers,
         })
         .pipe(
@@ -49,17 +53,12 @@ export class UsersService {
     }
   }
 
-  private initializedClient(): IUsers {
+  private initializedClient(): IRole {
     return {
-      userId: 0,
       roleId: 0,
       roleName: '',
-      firstName: '',
-      lastName: '',
-      email:'',
-      password: '',      
-      phoneNumber: '',
-      status:'',
+      roleDescription:'',
+      userCount: 0,
       row: '',
       totalRowCount:'',
       flag: 0
