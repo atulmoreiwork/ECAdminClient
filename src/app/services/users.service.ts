@@ -27,7 +27,7 @@ export class UsersService {
     });
   }
   deleteUserById(params: any): Observable<any> {
-    return this.http.get<any>(apiUrl + "/User/DeleteUserById", { headers: this.headers, params: params });
+    return this.http.get<any>(apiUrl + "/Users/DeleteUserById", { headers: this.headers, params: params });
   }
   getUser(id: number): Observable<IUsers> {
     if (id === 0) {

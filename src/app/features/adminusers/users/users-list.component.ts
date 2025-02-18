@@ -63,7 +63,7 @@ export class UsersListComponent implements OnInit {
 
   fillFilterObject(){
     let index = this.tableObject.filter.findIndex(((obj: { colId: string; }) => obj.colId.toLowerCase() == "userid"));
-    if(index > -1){ this.tableObject.filter[index].value = 1;  }
+    if(index > -1){ this.tableObject.filter[index].value = "";  }
     if(this.tableObject.filter.length <=0){
       var objFilter = new FilterDetails();  
       objFilter.colId="userid"; objFilter.name="userid"; objFilter.value= "";  objFilter.type= "num";
@@ -115,6 +115,7 @@ export class UsersListComponent implements OnInit {
       this.popupConfig.isShowPopup = false;
     }
     getReturnMessage(message: any) {
+      debugger;
       if(message == "delete"){
         this.popupConfig.isShowPopup = false;
         this.fillFilterObject();

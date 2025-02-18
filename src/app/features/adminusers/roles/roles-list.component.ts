@@ -63,7 +63,7 @@ export class RolesListComponent implements OnInit {
 
   fillFilterObject(){
     let index = this.tableObject.filter.findIndex(((obj: { colId: string; }) => obj.colId.toLowerCase() == "userid"));
-    if(index > -1){ this.tableObject.filter[index].value = 1;  }
+    if(index > -1){ this.tableObject.filter[index].value = "1";  }
     if(this.tableObject.filter.length <=0){
       var objFilter = new FilterDetails();  
       objFilter.colId="userid"; objFilter.name="userid"; objFilter.value= "";  objFilter.type= "num";

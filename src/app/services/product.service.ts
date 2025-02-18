@@ -22,10 +22,17 @@ export class ProductService {
     return this.http.post<any>(apiUrl + "/Product/GetAllProducts", data, { headers: this.headers });
   }
 
+  getProducts(): Observable<any> {
+    return this.http.get<any>(apiUrl + "/Product/GetProducts", { headers: this.headers });
+  }  
+
   deleteProductById(params: any): Observable<any> {
     return this.http.get<any>(apiUrl + "/Product/DeleteProductById", { headers: this.headers, params: params });
   }
-
+  getProductByCategoryId(params: any): Observable<any> {
+    return this.http.get<any>(apiUrl + "/Product/GetProductByCategoryId", { headers: this.headers, params: params });
+  }
+  
   addUpdateProduct(data: any): Observable<any> {
     return this.http.post(apiUrl + '/Product/AddUpdateProduct', data);
   }

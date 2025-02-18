@@ -36,4 +36,7 @@
             </button>
         </div>
       </ng-template>
-    </cm-table>  
+    </cm-table> 
+    <app-popup #popup [isShowPopup]="popupConfig.isShowPopup" [hidden]="!popupConfig.isShowPopup" (CloseEvent)="close($event)">
+      <app-product-delete (CloseEvent)="close($event)" [product]="product" (ReturnMessage)="getReturnMessage($event)"></app-product-delete>
+    </app-popup>   

@@ -1,6 +1,6 @@
 export const environment = {
     production: true,
-    apiUrl: 'http://localhost:5227/api',
+    apiUrl: 'https://ecadminapi.azurewebsites.net/api',
     contentUrl: 'D:\\ContentFolderPath' 
 };
   

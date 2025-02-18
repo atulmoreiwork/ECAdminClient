@@ -5,8 +5,9 @@ export interface IOrder
     orderId: number;
     orderNumber: string;
     customerId:number;
-    orderShippingAddressId: number;
-    customerName:string;    
+    categoryId:number;
+    customerName:string;  
+    orderShippingAddressId: number;      
     totalAmount: string;     
     discountAmount: string;  
     grossAmount:string;
@@ -44,7 +45,35 @@ export interface IOrderItem
     productName: string;
     color: string;
     size:string;
-    price:string;
-    quantity: string;
-    totalAmount: string;   
+    price:number;
+    quantity: number;
+    totalAmount: number;   
+}
+
+export interface IOrderItemsDetails
+{
+    orderItems: IOrderItem[];
+    totalAmount: string;     
+    discountAmount: string;  
+    grossAmount:string;
+    shippingAmount:string;
+    netAmount:string;
+}
+
+export interface IOrderStatus 
+{
+    id: string;
+    name: string;
+}
+
+export interface IPaymentType 
+{
+    id: string;
+    name: string;
+}
+
+export interface IPaymentStatus 
+{
+    id: string;
+    name: string;
 }

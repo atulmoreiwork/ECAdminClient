@@ -45,7 +45,7 @@ export class UserDeleteComponent implements OnInit {
     this.submitted = true;
     if (this.userDeleteForm.invalid) {return; }    
     var param = {     
-      UserId: this.userDeleteForm.value.roleId
+      UserId: this.userDeleteForm.value.userId
      }
      this.userService.deleteUserById(param).subscribe({
       next: data => {

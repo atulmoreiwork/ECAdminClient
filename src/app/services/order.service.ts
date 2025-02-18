@@ -50,6 +50,7 @@ export class OrderService {
         orderId: 0,
         orderNumber: '',
         customerId: 0,
+        categoryId:0,
         orderShippingAddressId: 0,
         customerName: '',
         totalAmount: '',

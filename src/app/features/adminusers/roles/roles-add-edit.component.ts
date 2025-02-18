@@ -59,7 +59,7 @@ export class RolesAddEditComponent implements OnInit {
       next: (data) => {
         this.addRoleError = false;
         if(data.success == true) {
-          this.router.navigate(['user/roles']);
+          this.router.navigate(['user']);
         }
       },
       error: (err) => {
@@ -79,7 +79,7 @@ export class RolesAddEditComponent implements OnInit {
     });
   }
   cancel(){
-    this.router.navigate(['user/roles']); 
+    this.router.navigate(['user']); 
   }
   alphaNumberOnly (e: any) {  // Accept only alpha numerics, not special characters 
     var regex = new RegExp("^[a-zA-Z0-9 ]+$");

@@ -11,7 +11,7 @@ import { Router, RouterModule } from '@angular/router';
 })
 export class SidebarComponent {
   menulist: any = [
-    {id:1, pageURL:"/user/roles", name:"User" },
+    {id:1, pageURL:"/user", name:"User" },
     {id:2, pageURL:"/customer", name:"Customer" },
     {id:3, pageURL:"/category", name:"Category" },
     {id:4, pageURL:"/product", name:"Product" },

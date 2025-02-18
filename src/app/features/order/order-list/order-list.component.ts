@@ -96,7 +96,7 @@ export class OrderListComponent implements OnInit{
       });
   }
 
-  AddNewOrder(){ this.router.navigate(['order/orderdetails/0']); } 
+  AddNewOrder(){ this.router.navigate(['order/orderaddedit/0']); } 
 
   popupConfig: PopUpConfig = PopUpConfigFactory.getPopUpConfig({
     header: 'Delete Order'

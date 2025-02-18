@@ -23,13 +23,13 @@
   }
   
   .image-preview {
-    display: flex;
+    /* display: flex; */
     align-items: center;
     margin-top: 10px;
   }
   
   .image-preview img {
-    max-width: 100px;
+    max-width: 150px;
     margin-right: 10px;
     border-radius: 5px;
   }

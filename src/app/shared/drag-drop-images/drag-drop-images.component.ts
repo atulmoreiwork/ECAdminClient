@@ -14,7 +14,8 @@ export class DragDropImagesComponent {
   // Allowed file extensions
   allowedExtensions = ['jpg', 'jpeg', 'png', 'svg'];
   // Output to emit the list of image URLs
-  @Output() imageListChange = new EventEmitter<string[]>();
+  //@Output() imageListChange = new EventEmitter<string[]>();
+  @Output() imageListChange = new EventEmitter<File[]>();
 
   onDragOver(event: DragEvent): void {
     event.preventDefault();
@@ -71,7 +72,7 @@ export class DragDropImagesComponent {
   }
 
   emitImageList(): void {
-    const imageUrls = this.images.map((image) => image.url);
-    this.imageListChange.emit(imageUrls); // Emit the list of image URLs
+    const fileList = this.images.map((image) => image.file);
+    this.imageListChange.emit(fileList); // Emit the list of image URLs
   }
 }

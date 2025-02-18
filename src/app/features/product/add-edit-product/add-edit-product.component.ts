@@ -142,9 +142,9 @@ export class AddEditProductComponent implements OnInit {
 
   }
 
-  uploadedImages: string[] = []; // Holds the list of image URLs from the child component
+  uploadedImages: File[] = []; // Holds the list of image URLs from the child component
 
-  onImageListChange(imageList: string[]): void {
+  onImageListChange(imageList: File[]): void {
     this.uploadedImages = imageList; // Update the parent component's list
     console.log('Updated Image List:', this.uploadedImages);
   }

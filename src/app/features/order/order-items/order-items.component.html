@@ -1,0 +1,85 @@
+<div class="flex justify-end pb-1">
+  <button type="button"  (click)="addOrderItem()" class="inline-flex px-5 py-3 text-white bg-ec_button hover:bg-ec_button-hover focus:bg-ec_button-hover rounded-md ml-6 mb-3">
+      <svg aria-hidden="true" fill="none" viewBox="0 0 24 24" stroke="currentColor" class="flex-shrink-0 h-6 w-6 text-white -ml-1 mr-2">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 0v6m0-6h6m-6 0H6" />
+      </svg>
+      Add Item
+  </button>
+</div>
+<table class="w-full border-collapse border border-gray-200 grow-0 shrink-0 basis-auto" style="table-layout: fixed;">
+  <thead>
+      <tr>
+          <th class="border border-gray-300 px-4 py-2 text-left">Action</th>
+          <th class="border border-gray-300 px-4 py-2 text-left">Product Name</th>
+          <th class="border border-gray-300 px-4 py-2 text-left">Size</th>
+          <th class="border border-gray-300 px-4 py-2 text-left">Color</th>
+          <th class="border border-gray-300 px-4 py-2 text-left">Quantity</th>
+          <th class="border border-gray-300 px-4 py-2 text-left">Price</th>
+          <th class="border border-gray-300 px-4 py-2 text-left">Total</th>
+      </tr>
+  </thead>
+  <tbody>
+      <tr *ngFor="let item of orderItemsDetails.orderItems; let i = index; trackBy: trackByIndex">
+          <td class="border border-gray-300 px-4 py-2">
+              <button (click)="removeOrderItem(i)" class="flex items-center justify-between px-2 py-2 text-sm font-medium leading-5 text-ec_themecolor_primary rounded-lg dark:text-gray-400 focus:outline-none focus:shadow-outline-gray"
+              aria-label="Delete" >
+                <app-svg
+                [iconName]="'delete'"
+                [xmlns]="'http://www.w3.org/2000/svg'"
+                [width]="'19px'"
+                [height]="'21px'"
+                [viewBox]="'0 0 19 21'"
+                [fill]="'none'"
+                [classAttr]="'w-6 h-6 stroke-flp_text'"
+              ></app-svg>
+            </button> 
+          </td>
+          <td class="border border-gray-300 px-4 py-2">          
+            <select class="p-1 border rounded w-full" [(ngModel)]="item.productId" (change)="updateVariants(item)">
+              <option [value]="0" disabled>Select Product</option>
+              <option *ngFor="let product of productList" [value]="product.productId">
+                {{ product.productName }}
+              </option>
+            </select>
+          </td>
+          <td class="border border-gray-300 px-4 py-2">
+            <select class="p-1 border rounded w-full" [(ngModel)]="item.size" (change)="updatePriceAndTotal(item)">
+              <option [value]="''" disabled>Select Size</option>
+              <option *ngFor="let size of getUniqueSizes(item.productId)" [value]="size">
+                {{ size }}
+              </option>
+            </select>
+          </td>
+          <td class="border border-gray-300 px-4 py-2">
+            <select class="p-1 border rounded w-full" [(ngModel)]="item.color" (change)="updatePriceAndTotal(item)">
+              <option [value]="''" disabled>Select Color</option>
+              <option *ngFor="let color of getUniqueColors(item.productId, item.size)" [value]="color">
+                {{ color }}
+              </option>
+            </select>
+          </td>
+          <td class="border border-gray-300 px-4 py-2">         
+            <input type="number" class="p-1 border rounded w-16 text-center" [(ngModel)]="item.quantity"
+            (input)="validateQuantity(item)" min="1" step="1" />
+          </td>
+          <td class="border border-gray-300 px-4 py-2">{{item.price}}</td>
+          <td class="border border-gray-300 px-4 py-2">{{item.totalAmount}}</td>          
+      </tr>
+      <tr>
+          <th colspan="6" class="text-right border border-gray-300 px-4 py-2">Total :</th>
+          <td class="border border-gray-300 px-4 py-2">{{ orderItemsDetails!.totalAmount }}</td>
+      </tr>
+      <tr>
+          <th colspan="6" class="text-right border border-gray-300 px-4 py-2">Discount :</th>
+          <td class="border border-gray-300 px-4 py-2">{{ orderItemsDetails!.discountAmount }}</td>
+      </tr>
+      <tr>
+          <th colspan="6" class="text-right border border-gray-300 px-4 py-2">Shipping :</th>
+          <td class="border border-gray-300 px-4 py-2">{{ orderItemsDetails!.shippingAmount}}</td>
+      </tr>
+      <tr>
+          <th colspan="6" class="text-right border border-gray-300 px-4 py-2">Net Amount :</th>
+          <td class="border border-gray-300 px-4 py-2">{{ orderItemsDetails!.netAmount }}</td>
+      </tr>
+  </tbody>
+</table>
